@@ -19,12 +19,13 @@ private:
 		Moving_Down,
 		Standing,
 		Error,
-		Final
+		//Final
 	};
 	State _current_state = State::Start;	// Текущее состояние
-	State _finite_state = State::Final;		// Конечное состояние
-	int _current_floor = 0;	// Текущий этаж
-	int _final_floor = 0;	// Конечный этаж
+	//State _finite_state = State::Final;		// Конечное состояние
+	State _finite_state = State::Standing;		// Конечное состояние
+	int _current_floor = '0';	// Текущий этаж
+	int _final_floor = '0';	// Конечный этаж
 	
 
 	
@@ -38,27 +39,75 @@ public:
 		switch (_current_state)
 		{
 		case State::Start:
-			_final_floor = _final_floors.front();
-			for (int i = _current_floor; i < _final_floor; i++)
+			//_final_floor = _final_floors.front();
+			if (!InAlphabet(_init_floors.front()))
+			{
+				_current_state = State::Error;
+				_init_floors.erase(_init_floors.begin());
+				_final_floors.erase(_init_floors.begin());
+			}
+			_final_floor = _init_floors.front();
+			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
+			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
+			else _current_state = State::Standing;
+			/*for (int i = _current_floor; i < _final_floor; i++){}*/
+			/*for (int i = 0; i < 2; i++)
+			{
+				_current_floor += 1;
+				if (_current_floor == _final_floor)
+				{
+					_current_state = State::Standing;
+					_init_floors.erase(_init_floors.begin());
+					_final_floors.erase(_final_floors.begin());
+					break;
+				}
+			}*/	
+			break;
+		case State::Moving_Up:
+			for (int i = 0; i < 2; i++) 
+			{
+				_current_floor += 1;
+				if (_current_floor == _final_floor)
+				{
+					_current_state = State::Standing;
+					/*_init_floors.erase(_init_floors.begin());
+					_final_floors.erase(_final_floors.begin());*/
+					break;
+				}
+			}
+			break;
+		case State::Moving_Down:
+			for (int i = 0; i < 2; i++)
+			{
+				_current_floor -= 1;
+				if (_current_floor == _final_floor)
+				{
+					
+					_current_state = State::Standing;
+					/*_init_floors.erase(_init_floors.begin());
+					_final_floors.erase(_final_floors.begin());*/
+					break;
+				}
+			}
+			break;
+		case State::Standing:
+			if (_final_floors.size() == _init_floors.size())
 			{
 
 			}
-			break;
-		case State::Moving_Up:
-
-			break;
-		case State::Moving_Down:
-
-			break;
-		case State::Standing:
-
+			_final_floor = _final_floors.front();
+			_init_floors.erase(_init_floors.begin());
+			_final_floors.erase(_final_floors.begin());
+			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
+			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
+			else _current_state = State::Standing;
 			break;
 		case State::Error:
 
 			break;
-		case State::Final:
+		/*case State::Final:
 
-			break;
+			break;*/
 		default:
 			break;
 		}
