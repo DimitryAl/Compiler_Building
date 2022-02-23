@@ -38,7 +38,11 @@ public:
 		switch (_current_state)
 		{
 		case State::Start:
-			for (int i = 0; )
+			_final_floor = _final_floors.front();
+			for (int i = _current_floor; i < _final_floor; i++)
+			{
+
+			}
 			break;
 		case State::Moving_Up:
 
@@ -96,6 +100,11 @@ public:
 		}
 		else return false;
 	}*/
+	bool IsEmpty()
+	{
+		if (_final_floors.empty()) return true;
+		else return false;
+	}
 
 };
 
@@ -110,13 +119,18 @@ int main()
 
 	char init_floor;
 	char final_floor;
-	while (!file.eof())
+	while (1)
 	{
-		init_floor = Elevator.GetData(file);
-		final_floor = Elevator.GetData(file);
-		Elevator.AddQueue(1, init_floor);
-		Elevator.AddQueue(2, final_floor);
+		if (!file.eof())
+		{
+			init_floor = Elevator.GetData(file);
+			final_floor = Elevator.GetData(file);
+
+			Elevator.AddQueue(1, init_floor);
+			Elevator.AddQueue(2, final_floor);
+		}
 		Elevator.Transition();
+		if (Elevator.IsEmpty()) break;
 	}
 
 
