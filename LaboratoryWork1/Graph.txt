@@ -1,0 +1,24 @@
+1 - Если текущий этаж выше вызванного
+2 - Если текущий этаж ниже вызванного
+3 - Если текущий этаж равен вызванному
+4 - входной символ не из алфавита
+5 - /n
+
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,5"
+	node [shape = doublecircle]; Final;
+	node [shape = circle];	
+	Start -> Moving_Up [1];
+	Start -> Moving_Down [2];
+	Start -> Standing [3];
+	Start -> Standing [4];
+	Start -> Final [5];
+	Moving_Up -> Standing [3];
+	Moving_Down -> Standing [3];
+	Standing -> Moving_Up [1];
+	Standing -> Moving_Down [2];
+	Standing -> Standing [3];
+	Standing -> Standing [4];
+	Standing -> Final [5];
+}
