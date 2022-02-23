@@ -13,6 +13,7 @@ private:
 		'5', '6', '7', '8', '9', (char)'/n'};
 	std::vector<char> _init_floors{};	// Очередь нажатий
 	std::vector<char> _final_floors{};	// Очередь конечных этажей
+
 	enum class State {    // Состояния автомата
 		Start,
 		Moving_Up,
@@ -47,6 +48,7 @@ public:
 				_final_floors.erase(_init_floors.begin());
 			}
 			_final_floor = _init_floors.front();
+			_init_floors.erase(_init_floors.begin());
 			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
 			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
 			else _current_state = State::Standing;
@@ -79,6 +81,7 @@ public:
 		case State::Moving_Down:
 			for (int i = 0; i < 2; i++)
 			{
+				// if current_floor == 
 				_current_floor -= 1;
 				if (_current_floor == _final_floor)
 				{
@@ -93,11 +96,16 @@ public:
 		case State::Standing:
 			if (_final_floors.size() == _init_floors.size())
 			{
-
+				_final_floor = _init_floors.front();
+				_init_floors.erase(_init_floors.begin());
 			}
-			_final_floor = _final_floors.front();
+			else {
+				_final_floor = _final_floors.front();
+				_final_floors.erase(_final_floors.begin());
+			}
+			/*_final_floor = _final_floors.front();
 			_init_floors.erase(_init_floors.begin());
-			_final_floors.erase(_final_floors.begin());
+			_final_floors.erase(_final_floors.begin());*/
 			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
 			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
 			else _current_state = State::Standing;
