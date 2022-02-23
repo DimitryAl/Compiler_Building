@@ -9,16 +9,16 @@ digraph finite_state_machine {
 	size="8,5"
 	node [shape = doublecircle]; Final;
 	node [shape = circle];	
-	Start -> Moving_Up [1];
-	Start -> Moving_Down [2];
-	Start -> Standing [3];
-	Start -> Standing [4];
-	Start -> Final [5];
-	Moving_Up -> Standing [3];
-	Moving_Down -> Standing [3];
-	Standing -> Moving_Up [1];
-	Standing -> Moving_Down [2];
-	Standing -> Standing [3];
-	Standing -> Standing [4];
-	Standing -> Final [5];
+	Start -> Moving_Up [label = 1];
+	Start -> Moving_Down [label = 2];
+	Start -> Standing [label = 3];
+	Start -> Standing [label = 4];
+	Start -> Final [label = 5];
+	Moving_Up -> Standing [label = 3];
+	Moving_Down -> Standing [label = 3];
+	Standing -> Moving_Up [label = 1];
+	Standing -> Moving_Down [label = 2];
+	Standing -> Standing [label = 3];
+	Standing -> Standing [label = 4];
+	Standing -> Final [label = 5];
 }

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Draft.cpp" />
     <ClCompile Include="LaboratoryWork1.cpp" />
   </ItemGroup>
   <ItemGroup>

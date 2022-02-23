@@ -3,15 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <math.h>
 
 class StateMachine
 {
 private:
-	//char _new_line = '/n';
 	std::vector<char> _alphabet{	// Входной алфавит
 		'0', '1', '2', '3', '4',
 		'5', '6', '7', '8', '9', (char)'/n'};
-	std::vector<char> _init_floors{};	// Очередь нажатий
+	std::vector<char> _init_floors{};	// Очередь вызовов
 	std::vector<char> _final_floors{};	// Очередь конечных этажей
 	std::vector<char> _in_elevator{};	// Этажи на которые нажали люди в лифте
 	enum class State {    // Состояния автомата
@@ -19,23 +19,21 @@ private:
 		Moving_Up,
 		Moving_Down,
 		Standing,
-		Error,
 		Final
 	};
 	State _current_state = State::Start;	// Текущее состояние
-	//State _finite_state = State::Final;		// Конечное состояние
 	int _current_floor = '0';	// Текущий этаж
-	int _final_floor = '0';	// Конечный этаж
+	int _final_floor = '0';		// Конечный этаж
 
 public:
 	StateMachine() {};
 
-	void Transition(/*char symbol*/)
+	void Transition()
 	{
+		std::vector<char>::iterator temp;
 		switch (_current_state)
 		{
 		case State::Start:
-			//_final_floor = _final_floors.front();
 			if (!InAlphabet(_init_floors.front()))	// Если символ не из алфавита
 			{
 				_current_state = State::Standing;
@@ -43,68 +41,22 @@ public:
 				_final_floors.erase(_init_floors.begin());
 			}
 			_final_floor = _init_floors.front();
-			_in_elevator.push_back(_final_floor);
 			_init_floors.erase(_init_floors.begin());
-			//_in_elevator.push_back(_final_floors.front());
-			//_final_floors.erase(_final_floors.begin());
+			// Определяем куда ехать
 			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
 			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
 			else _current_state = State::Standing;
-			/*for (int i = _current_floor; i < _final_floor; i++){}
-			for (int i = 0; i < 2; i++)
-			{
-				_current_floor += 1;
-				if (_current_floor == _final_floor)
-				{
-					_current_state = State::Standing;
-					_init_floors.erase(_init_floors.begin());
-					_final_floors.erase(_final_floors.begin());
-					break;
-				}
-			}*/	
+
 			break;
 		case State::Moving_Up:
-			for (int i = 0; i < 2; i++) 
-			{
-				_current_floor += 1;
-				if (_current_floor == _final_floor)
-				{
-					_current_state = State::Standing;
-					/*_init_floors.erase(_init_floors.begin());
-					_final_floors.erase(_final_floors.begin());*/
-					break;
-				}
-			}
+			_current_floor += 1;
+			if (_current_floor == _final_floor) _current_state = State::Standing;
 			break;
 		case State::Moving_Down:
-			for (int i = 0; i < 2; i++)
-			{
-				if (InVector(_current_floor))
-				{
-					auto result = std::find(begin(_init_floors), end(_init_floors), _current_floor);
-					if (_final_floors[])
-					_in_elevator.push_back();
-				}
-				_current_floor -= 1;
-				if (_current_floor == _final_floor)
-				{
-					
-					_current_state = State::Standing;
-					/*_init_floors.erase(_init_floors.begin());
-					_final_floors.erase(_final_floors.begin());*/
-					break;
-				}
-			}
+			_current_floor -= 1;
+		
 			break;
 		case State::Standing:
-			//
-			// Типо если в лифте никого нет , то то-то, иначе то-то
-			// 
-			//if (_in_elevator.size() != 0)	// Если лифт не пустой
-			//{
-			//	_final_floor = _in_elevator.front();
-			//	_in_elevator.erase(_in_elevator.begin());
-			//}
 			if (_final_floors.size() == _init_floors.size())
 			{
 				_final_floor = _init_floors.front();
@@ -114,18 +66,9 @@ public:
 				_final_floor = _final_floors.front();
 				_final_floors.erase(_final_floors.begin());
 			}
-			/*_final_floor = _final_floors.front();
-			_init_floors.erase(_init_floors.begin());
-			_final_floors.erase(_final_floors.begin());*/
-			if (_final_floor > _current_floor) _current_state = State::Moving_Up;
-			else if (_final_floor < _current_floor) _current_state = State::Moving_Down;
-			else _current_state = State::Standing;
-			break;
-		case State::Error:
-
 			break;
 		case State::Final:
-
+			
 			break;
 		default:
 			break;
@@ -147,10 +90,10 @@ public:
 		}
 		return false;
 	}
-	bool InVector(char inputSymbol)
+	bool InVector(std::vector<char> vect, char inputSymbol)
 	{
-		auto result = std::find(begin(_init_floors), end(_init_floors), inputSymbol);
-		if (result != end(_init_floors)) {
+		auto result = std::find(begin(vect), end(vect), inputSymbol);
+		if (result != end(vect)) {
 			return true;
 		}
 		return false;
@@ -159,10 +102,6 @@ public:
 	{
 		return this->_current_floor;
 	}
-	//int GetFinalFloor()
-	//{
-	//	return this->_final_floor;
-	//}
 	bool SetCurrentFloor(int floor) {
 		if (InAlphabet(floor)) { 
 			_current_floor = floor; 
@@ -170,13 +109,6 @@ public:
 		}
 		else return false;
 	}
-	/*bool SetFinalFloor(int floor) {
-		if (InAlphabet(floor)) {
-			_final_floor = floor;  
-			return true;
-		}
-		else return false;
-	}*/
 	bool IsEmpty()
 	{
 		if (_final_floors.empty()) return true;
