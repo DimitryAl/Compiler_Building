@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Draft.cpp" />
     <ClCompile Include="LaboratoryWork1.cpp" />
+    <ClCompile Include="LaboratoryWork1_class.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Graph.txt" />

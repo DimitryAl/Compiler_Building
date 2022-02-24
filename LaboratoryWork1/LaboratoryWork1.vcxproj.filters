@@ -21,6 +21,9 @@
     <ClCompile Include="Draft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LaboratoryWork1_class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt">
