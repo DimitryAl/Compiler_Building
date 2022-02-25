@@ -1,3 +1,4 @@
+
 // LaboratoryWork1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
 #include <iostream>
@@ -235,30 +236,30 @@ public:
 
 };
 
-int main()
-{
-	std::string fileName = "input.txt";
-	std::ifstream file;
-	file.open(fileName);
-	if (!file) { return 1; }
-
-	StateMachine Elevator;
-
-	char init_floor;
-	char final_floor;
-	while (1)
-	{
-		if (!file.eof())
-		{
-			init_floor = Elevator.GetData(file);
-			final_floor = Elevator.GetData(file);
-
-			Elevator.AddQueue(1, init_floor);
-			Elevator.AddQueue(2, final_floor);
-		}
-		Elevator.Transition();
-		if (Elevator.IsEmpty()) break;
-	}
-
-	return 0;
-}
+//int main()
+//{
+//	std::string fileName = "input.txt";
+//	std::ifstream file;
+//	file.open(fileName);
+//	if (!file) { return 1; }
+//
+//	StateMachine Elevator;
+//
+//	char init_floor;
+//	char final_floor;
+//	while (1)
+//	{
+//		if (!file.eof())
+//		{
+//			init_floor = Elevator.GetData(file);
+//			final_floor = Elevator.GetData(file);
+//
+//			Elevator.AddQueue(1, init_floor);
+//			Elevator.AddQueue(2, final_floor);
+//		}
+//		Elevator.Transition();
+//		if (Elevator.IsEmpty()) break;
+//	}
+//
+//	return 0;
+//}
