@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <stdlib.h>
 
 bool InVector(std::vector<char> vect, char inputSymbol)
 {
@@ -16,17 +17,15 @@ char GetData(std::ifstream& file)
 {
 	return file.get();
 };
-//bool IsEmpty(std::vector<char> vect)
-//{
-//	if (vect.empty()) return true;
-//	else return false;
-//}
-//class StateMachine
-//{
-//public:
-//
-//	
-//};
+
+char GenerateFloor(int min, int max)
+{
+	int res = min + rand() % (max - min + 1);
+	return (char)res;
+};
+
+
+
 
 class FiniteStateMachine /*:public StateMachine*/
 {
@@ -39,8 +38,7 @@ private:
 	std::vector<char> _in_elevator{};	// Этажи на которые нажали люди в лифте
 	static enum class State {    // Состояния автомата
 		Start,
-		Choosing,
-		Standing,
+		PickUp,
 		Final
 	};
 	State _current_state = State::Start;	// Текущее состояние
@@ -51,16 +49,29 @@ public:
 
 	FiniteStateMachine() {};
 
-	char Transition(char input_symbol)
+	void Transition(char input_symbol)
 	{
 		switch (_current_state)
 		{
 		case State::Start:
+			if (input_symbol == '\n') _current_state = State::Final; 
+			if (input_symbol == 'e') _current_state = State::Final;
+			else {
+				_current_state = State::Standing;
+				_final_floor = GenerateFloor(48, 57);
+			}
 			break;
-		case State::Choosing:
-			if (_current_state == _final_state) return 'e';
-			break;
-		case State::Standing:
+		/*case State::Moving:
+			if (input_symbol == '\n') _current_state = State::Final;
+			break;*/
+		case State::PickUp:
+			if (input_symbol == '\n') _current_state = State::Final;
+			if (input_symbol == 'e') _current_state = State::Final;
+			else {
+				_current_state = State::Standing;
+				_current_floor = _final_floor;
+				_final_floor = GenerateFloor(48, 57);
+			}
 			break;
 		case State::Final:
 			break;
@@ -68,12 +79,6 @@ public:
 			break;
 		}
 	}
-
-	void AddQueue(int n, char symbol) {
-		if (n == 1) _init_floors.push_back(symbol);
-		else if (n == 2) _final_floors.push_back(symbol);
-	}
-
 	
 	std::vector<char> GetAlphabet()
 	{
@@ -91,20 +96,50 @@ public:
 	{
 		return State::Start;
 	}
-	State GetChoosingState() {
-		return State::Choosing;
-	}
-	State WaitInput()
+	State GetPickUpState()
 	{
-		return State::Choosing;
+		return State::PickUp;
 	}
+	void PrintState()
+	{
+		switch (_current_state)
+		{
+		case State::Start:
+			std::cout << "Start";
+			break;
+		case State::PickUp:
+			std::cout << "Standing";
+			break;
+		case State::Final:
+		std::cout << "Final";
+			break;
+		default:
+			break;
+		}
+	}
+	void PrintCurrentFloor()
+	{
+		std::cout << _current_floor;
+	}
+	void PrintFinalFloor()
+	{
+		std::cout << _final_floor;
+	}
+};
+
+void PrintData(FiniteStateMachine Elevator)
+{
+	std::cout << "Current state ";
+	Elevator.PrintState();
+	std::cout << "\tCurrent floor ";
+	Elevator.PrintCurrentFloor();
+	std::cout << "\tFinal floor ";
+	Elevator.PrintFinalFloor();
+	std::cout << std::endl;
 };
 
 int main()
 {
-	std::cout << "This is LaboratoryWork1.cpp";
-
-
 	std::string fileName = "input.txt";
 	std::ifstream file;
 
@@ -113,29 +148,26 @@ int main()
 
 	FiniteStateMachine Elevator;
 
-	char init_floor;
-	char final_floor;
+	//char init_floor;
+	//char final_floor;
 	char input_symbol;
-	// Сделать массив чисел из файла, а не читать из файла
+	PrintData(Elevator);
 	while (1)
 	{
-		if (Elevator.GetCurrentState() == Elevator.WaitInput() || Elevator.GetStartState() == Elevator.WaitInput())
+		if (Elevator.GetCurrentState() == Elevator.GetPickUpState() || Elevator.GetCurrentState() == Elevator.GetStartState())
 		{
-			init_floor = GetData(file);
-			final_floor = GetData(file);
-
-			if (InVector(Elevator.GetAlphabet(), init_floor)) input_symbol = init_floor;
-			else input_symbol = 'e';
-			input_symbol = Elevator.Transition(input_symbol);
-		}
-		else if (Elevator.GetCurrentState() == Elevator.GetChoosingState())
-		{
+			input_symbol = GetData(file);
+			if (!InVector(Elevator.GetAlphabet(), input_symbol)) input_symbol = 'e';
 			Elevator.Transition(input_symbol);
-		}
-		
+			PrintData(Elevator);
 
+		}
+		else continue;			
+		
 		if (Elevator.GetCurrentState() == Elevator.GetFinalState()) break;
 	}
 
+
 	return 0;
 }
+
