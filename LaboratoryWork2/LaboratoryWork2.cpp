@@ -10,10 +10,11 @@ enum class State
 	Read,
 	Final
 };
-std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e'};
+std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
 Node* root = new Node();
 std::vector <Node*> stack = {};
-Node* parent;
+Node* parent = root;
+Node* last;
 State current_state = State::Start;
 
 
@@ -26,16 +27,13 @@ State Transition(State cur_state, char symbol)
 		if (symbol == 'e') return State::Final;
 		if (symbol == '{')
 		{
-			/*stack.push_back(root);
-			root->AddChild(symbol);*/
-			//return State::Read;
+			return State::Final;
 		}
 		if (symbol == '}')
 		{
-			//return State::Read;
+			return State::Final;
 		}
-		//parent = root;
-		parent = root->AddChild(symbol);
+		last = root->AddChild(symbol);
 		return State::Read;
 		break;
 	case State::Read:
@@ -46,24 +44,45 @@ State Transition(State cur_state, char symbol)
 		if (symbol == '{')
 		{
 			stack.push_back(parent);
-			//return State::Read;
+			parent = last;
+			return State::Read;
 		}
 		if (symbol == '}')
 		{
 			parent = stack.back();
 			stack.pop_back();
-			//return State::Read;
+			return State::Read;
 		}
-		//parent->AddChild(symbol);
+		last = parent->AddChild(symbol);
 		return State::Read;
-		
+
 		break;
 	case State::Final:
 		return State::Final;
 		break;
+	default:
+		return State::Final;
 	}
 }
 
+
+void PrintTree(Node node, int indent = 0)
+{
+	std::vector <Node*> children;
+
+	for (int i = 0; i < indent; i++)
+	{
+		std::cout << ' ';
+	}
+	std::cout << node.GetValue();
+	std::cout << '\n';
+
+	children = node.GetChildren();
+	indent++;
+	for (auto child : children) {
+		PrintTree(*child, indent);
+	}
+}
 
 char GetSymbol(std::ifstream& file)
 {
@@ -90,9 +109,6 @@ int main()
 	file.open(file_name);
 	if (!file) { return 1; }
 
-	/*Node* root = new Node();
-	State current_state = State::Start;*/
-	int cnt = 0;
 	while (1)
 	{
 		symbol = GetSymbol(file);
@@ -102,12 +118,12 @@ int main()
 		}
 
 		current_state = Transition(current_state, symbol);
-		cnt++;
-		if (cnt == 15) current_state = State::Final;
+
 		if (current_state == State::Final) break;
 	}
 
-	root->PrintTree(root);
+	PrintTree(*root);
+	
 	file.close();
 
 	return 0;

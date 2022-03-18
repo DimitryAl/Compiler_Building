@@ -18,8 +18,6 @@ public:
 	
 	~Node() {};
 
-	void PrintTree(Node* node, int indent = 0);
-
 	Node* AddChild(char value);
 
 	char GetValue();
