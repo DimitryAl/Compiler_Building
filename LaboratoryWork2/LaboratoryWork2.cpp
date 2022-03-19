@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <string>
 
 #include "TNode.h"
 
@@ -9,6 +10,7 @@ enum class State
 	Start,
 	Read,
 	ReadName,
+	ReadNumber,
 	Final
 };
 std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
@@ -17,7 +19,8 @@ std::vector <Node*> stack = {};
 Node* parent = root;
 Node* last;
 State current_state = State::Start;
-std::vector <char> name = {};
+std::string name = {};
+std::string square = {};
 
 
 State Transition(State cur_state, char symbol)
@@ -35,8 +38,12 @@ State Transition(State cur_state, char symbol)
 		{
 			return State::Final;
 		}
-		last = root->AddChild(symbol);
-		return State::Read;
+		if (symbol == '\"')
+		{
+			return State::ReadName;
+		}
+		//last = root->AddChild(name, std::stoi(square));
+		//return State::Read;
 		break;
 	case State::Read:
 
@@ -57,11 +64,12 @@ State Transition(State cur_state, char symbol)
 		}
 		if (symbol == '\"')
 		{
+			name = {};
 			return State::ReadName;
 		}
-	
 
-		last = parent->AddChild(symbol);
+
+		//last = parent->AddChild(name, std::stoi(square));
 		return State::Read;
 
 		break;
@@ -70,14 +78,29 @@ State Transition(State cur_state, char symbol)
 		if (symbol == '\n') return State::Final;
 		if (symbol == 'e') return State::Final;
 
-		if (symbol == '\"')
+		if (symbol == ':')
 		{
-			return State::Read;
+			//square = {};
+			return State::ReadNumber;
 		}
-
 		name.push_back(symbol);
 		return State::ReadName;
 
+		break;
+	case State::ReadNumber:
+
+		if (symbol == '\n') return State::Final;
+		if (symbol == 'e') return State::Final;
+
+		if (symbol == '\"')
+		{
+			last = parent->AddChild(name, std::stoi(square));
+			square = {};
+			name = {};
+			return State::Read;
+		}
+		square.push_back(symbol);
+		return State::ReadNumber;
 		break;
 	case State::Final:
 		return State::Final;
@@ -94,9 +117,9 @@ void PrintTree(Node node, int indent = 0)
 
 	for (int i = 0; i < indent; i++)
 	{
-		std::cout << ' ';
+		std::cout << '\t';
 	}
-	std::cout << node.GetValue();
+	std::cout << node.GetName() << ' ' << node.GetSquare();
 	std::cout << '\n';
 
 	children = node.GetChildren();
@@ -134,18 +157,19 @@ int main()
 	while (1)
 	{
 		symbol = GetSymbol(file);
-		if (!InVector(symbol))
+		/*if (!InVector(symbol))
 		{
 			symbol = 'e';
-		}
+		}*/
 
 		current_state = Transition(current_state, symbol);
 
 		if (current_state == State::Final) break;
 	}
+	setlocale(LC_ALL, "rus");
 
 	PrintTree(*root);
-	
+
 	file.close();
 
 	return 0;

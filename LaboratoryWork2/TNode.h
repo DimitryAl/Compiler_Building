@@ -8,19 +8,22 @@ class Node
 {
 private:
 	// node's value 
-	char _value;
+	//char _value;
+	std::string _name;
+	int _square;
 	// vetor of node's children 
-	std::vector <Node*> _children = {};
+	std::vector <Node*> _children;
 public:
 
 	Node();
-	Node(char value);
+	Node(std::string name, int );
 	
 	~Node() {};
 
-	Node* AddChild(char value);
+	Node* AddChild(std::string name, int square);
 
-	char GetValue();
+	int GetSquare();
+	std::string GetName();
 
 	std::vector <Node*> GetChildren();
 };
