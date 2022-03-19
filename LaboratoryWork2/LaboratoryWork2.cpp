@@ -8,6 +8,7 @@ enum class State
 {
 	Start,
 	Read,
+	ReadName,
 	Final
 };
 std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
@@ -16,6 +17,7 @@ std::vector <Node*> stack = {};
 Node* parent = root;
 Node* last;
 State current_state = State::Start;
+std::vector <char> name = {};
 
 
 State Transition(State cur_state, char symbol)
@@ -53,8 +55,28 @@ State Transition(State cur_state, char symbol)
 			stack.pop_back();
 			return State::Read;
 		}
+		if (symbol == '\"')
+		{
+			return State::ReadName;
+		}
+	
+
 		last = parent->AddChild(symbol);
 		return State::Read;
+
+		break;
+	case State::ReadName:
+
+		if (symbol == '\n') return State::Final;
+		if (symbol == 'e') return State::Final;
+
+		if (symbol == '\"')
+		{
+			return State::Read;
+		}
+
+		name.push_back(symbol);
+		return State::ReadName;
 
 		break;
 	case State::Final:
