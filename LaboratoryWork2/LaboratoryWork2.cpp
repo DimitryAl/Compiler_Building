@@ -13,7 +13,7 @@ enum class State
 	ReadNumber,
 	Final
 };
-std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
+//std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
 Node* root = new Node();
 std::vector <Node*> stack = {};
 Node* parent = root;
@@ -129,20 +129,30 @@ void PrintTree(Node node, int indent = 0)
 	}
 }
 
-void CheckSquare(Node node)
+void CheckSquare(Node* node)
 {
-	//std::vector <Node*> children;
-	int total_square = node.GetSquare();
+	std::vector <Node*> children = node->GetChildren();
+	int total_square = node->GetSquare();
 	int current_sum = 0;
 
-	for (auto child : node.GetChildren())
+	if (!children.empty())
 	{
-		current_sum += child->GetSquare();
+		for (auto child : children)
+		{
+			current_sum += child->GetSquare();
+		}
+		if (total_square != current_sum)
+		{
+			std::cout << "Площади не совпадают!\n";
+		}
+		else {
+			std::cout << "Площади совпадают!\n";
+		}
 	}
 
-	if (total_square != current_sum)
+	for (auto child : node->GetChildren())
 	{
-		std::cout << "Площади не совпадают!\n";
+		CheckSquare(child);
 	}
 
 }
@@ -153,15 +163,15 @@ char GetSymbol(std::ifstream& file)
 	return symbol;
 }
 
-bool InVector(char symbol)
-{
-	if (std::find(alphabet.begin(), alphabet.end(), symbol) != alphabet.end()) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
+//bool InVector(char symbol)
+//{
+//	if (std::find(alphabet.begin(), alphabet.end(), symbol) != alphabet.end()) {
+//		return true;
+//	}
+//	else {
+//		return false;
+//	}
+//}
 
 int main()
 {
@@ -185,6 +195,11 @@ int main()
 		if (current_state == State::Final) break;
 	}
 	setlocale(LC_ALL, "rus");
+
+	for (Node* child : root->GetChildren())
+	{
+		CheckSquare(child);
+	}
 
 	PrintTree(*root);
 
