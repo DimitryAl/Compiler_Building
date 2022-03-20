@@ -129,6 +129,24 @@ void PrintTree(Node node, int indent = 0)
 	}
 }
 
+void CheckSquare(Node node)
+{
+	//std::vector <Node*> children;
+	int total_square = node.GetSquare();
+	int current_sum = 0;
+
+	for (auto child : node.GetChildren())
+	{
+		current_sum += child->GetSquare();
+	}
+
+	if (total_square != current_sum)
+	{
+		std::cout << "Площади не совпадают!\n";
+	}
+
+}
+
 char GetSymbol(std::ifstream& file)
 {
 	char symbol = file.get();
