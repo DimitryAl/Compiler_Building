@@ -1,0 +1,26 @@
+Состояния 	{Start,
+		Read,
+		ReadName,
+		ReadNumber,
+		Final}
+
+Start -> '\n'Final
+Start -> '{'Final
+Start -> '}'Final
+Start -> '"'ReadName
+
+Read -> '\n'Final
+Read -> '{'Read
+Read -> '}'Read
+Read -> '"'ReadName
+Read -> |любой другой символ|Read
+
+ReadName -> '\n'Final
+ReadName -> ':'ReadNumber
+ReadName -> |любой другой символ|ReadName
+
+ReadNumber-> '\n'Final
+ReadNumber-> '"'Read
+ReadNumber -> |любой другой символ|ReadNumber
+
+Final -> |любой символ|Final
