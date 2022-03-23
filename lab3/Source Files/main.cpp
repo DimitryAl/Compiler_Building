@@ -8,8 +8,8 @@ void Output(std::vector<std::string> strings, std::string exp)
 
     for (auto string : strings)
     {
-        std::cout << "regex_search\t" << string << "\t:\t" << std::regex_search(string, regex) << std::endl;
-        std::cout << "regex_match\t" << string << "\t:\t" << std::regex_match(string, regex) << std::endl;
+        std::cout << "regex_search\t" << string << "\t" << std::regex_search(string, regex) << std::endl;
+        std::cout << "regex_match\t" << string << "\t" << std::regex_match(string, regex) << std::endl;
     }
     std::cout << std::endl;
 }
@@ -67,9 +67,30 @@ int main()
 
     std::cout << "-----TASK 8-----\n";
     std::vector<std::string> strings8 = {"1 file found?", "2 files found?", "24 files found?", "No files found."};
-    std::string exp8 = "";
+    std::string exp8 = "\\d\\d? files? found\\?";
     Output(strings8, exp8);
 
+    std::cout << "-----TASK 9-----\n";
+    std::vector<std::string> strings9 = {"1.   abc", "2.	abc", "3.           abc", "4.abc"};
+    std::string exp9 = "\\d\\.\\s+abc";
+    Output(strings9, exp9);
+
+    std::cout << "-----TASK 10-----\n";
+    std::vector<std::string> strings10 = {"Mission: successful", 
+                                        "Last Mission: unsuccessful",
+                                        "Next Mission: successful upon capture of target"};
+    std::string exp10 = "\\.+ successful$";
+    Output(strings10, exp10);
+
+    std::cout << "-----TASK 11-----\n";
+    std::vector<std::string> strings11 = {"file_record_transcript.pdf", "file_07241999.pdf", "testfile_fake.pdf.tmp"};
+    std::string exp11 = "^(file_.+).pdf";
+    Output(strings11, exp11);
+
+    std::cout << "-----TASK 12-----\n";
+    std::vector<std::string> strings12 = {"Jan 1987", "May 1969", "Aug 2011"};
+    std::string exp12 = "";
+    Output(strings12, exp12);
 
     std::cout << std::endl;
 
