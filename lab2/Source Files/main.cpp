@@ -89,7 +89,9 @@ State Transition(State cur_state, char symbol)
 			name = {};
 			return State::Read;
 		}
-		square.push_back(symbol);
+		if (48 <= symbol <= 57) square.push_back(symbol);
+		else return State::Final;
+		
 		return State::ReadNumber;
 		break;
 	case State::Final:
