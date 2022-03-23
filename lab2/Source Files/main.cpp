@@ -13,7 +13,6 @@ enum class State
 	ReadNumber,
 	Final
 };
-//std::vector <char> alphabet = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '{', '}', '\n', 'e' };
 Node* root = new Node();
 std::vector <Node*> stack = {};
 Node* parent = root;
@@ -29,7 +28,6 @@ State Transition(State cur_state, char symbol)
 	case State::Start:
 
 		if (symbol == '\n') return State::Final;
-		//if (symbol == 'e') return State::Final;
 		if (symbol == '{')
 		{
 			return State::Final;
@@ -42,13 +40,10 @@ State Transition(State cur_state, char symbol)
 		{
 			return State::ReadName;
 		}
-		//last = root->AddChild(name, std::stoi(square));
-		//return State::Read;
 		break;
 	case State::Read:
 
 		if (symbol == '\n') return State::Final;
-		//if (symbol == 'e') return State::Final;
 
 		if (symbol == '{')
 		{
@@ -68,19 +63,15 @@ State Transition(State cur_state, char symbol)
 			return State::ReadName;
 		}
 
-
-		//last = parent->AddChild(name, std::stoi(square));
 		return State::Read;
 
 		break;
 	case State::ReadName:
 
 		if (symbol == '\n') return State::Final;
-		//if (symbol == 'e') return State::Final;
 
 		if (symbol == ':')
 		{
-			//square = {};
 			return State::ReadNumber;
 		}
 		name.push_back(symbol);
@@ -90,7 +81,6 @@ State Transition(State cur_state, char symbol)
 	case State::ReadNumber:
 
 		if (symbol == '\n') return State::Final;
-		//if (symbol == 'e') return State::Final;
 
 		if (symbol == '\"')
 		{
@@ -141,13 +131,12 @@ void CheckSquare(Node* node)
 		{
 			current_sum += child->GetSquare();
 		}
-		std::cout << node->GetName() << std::endl;
 		if (total_square != current_sum)
 		{
-			std::cout << "Areas are not equal!\n";
+			std::cout << "Area of " << node->GetName() << " and area of it's children are not equal!\n";
 		}
 		else {
-			std::cout << "Areas are equal!\n";
+			std::cout << "Area of " << node->GetName() << " and area of it's children are equal!\n";
 		}
 	}
 
@@ -163,16 +152,6 @@ char GetSymbol(std::ifstream& file)
 	char symbol = file.get();
 	return symbol;
 }
-
-//bool InVector(char symbol)
-//{
-//	if (std::find(alphabet.begin(), alphabet.end(), symbol) != alphabet.end()) {
-//		return true;
-//	}
-//	else {
-//		return false;
-//	}
-//}
 
 int main()
 {
@@ -191,9 +170,9 @@ int main()
 		
 		if (current_state == State::Final) break;
 	}
-	
-	//setlocale(LC_ALL, "rus");
-	
+
+	file.close();
+
 	std::cout << "Checking areas:\n";
 	for (Node* child : root->GetChildren())
 	{
@@ -201,8 +180,6 @@ int main()
 	}
 	std::cout << std::endl;
 	PrintTree(*root);
-
-	file.close();
 
 	return 0;
 }
