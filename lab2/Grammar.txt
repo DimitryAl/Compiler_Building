@@ -13,14 +13,18 @@ Read -> '\n'Final
 Read -> '{'Read
 Read -> '}'Read
 Read -> '"'ReadName
-Read -> |любой другой символ|Read
+Read -> |любой символ кроме '\n' '{ '}' ' " ' |Read
 
 ReadName -> '\n'Final
 ReadName -> ':'ReadNumber
-ReadName -> |любой другой символ|ReadName
+ReadName -> |любой символ кроме  '\n' ':' |ReadName
 
-ReadNumber-> '\n'Final
-ReadNumber-> '"'Read
-ReadNumber -> |любой другой символ|ReadNumber
+ReadNumber -> '\n'Final
+ReadNumber -> '"'Read
+ReadNumber -> |цифра|ReadName
+ReadNumber -> |любой символ кроме '\n' '"' |цифра||Final
 
 Final -> |любой символ|Final
+
+
+
