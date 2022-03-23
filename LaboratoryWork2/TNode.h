@@ -1,4 +1,6 @@
-#pragma once
+//#pragma once
+#ifndef TNODE_H
+#define TNODE_H
 
 #include <iostream>
 #include <vector>
@@ -28,3 +30,4 @@ public:
 	std::vector <Node*> GetChildren();
 };
 
+#endif	//TNODE_H
