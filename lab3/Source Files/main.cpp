@@ -11,6 +11,7 @@ void Output(std::vector<std::string> strings, std::string exp)
         std::cout << "regex_search\t" << string << "\t:\t" << std::regex_search(string, regex) << std::endl;
         std::cout << "regex_match\t" << string << "\t:\t" << std::regex_match(string, regex) << std::endl;
     }
+    std::cout << std::endl;
 }
 
 int main()
