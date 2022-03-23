@@ -18,8 +18,8 @@ std::vector <Node*> stack = {};
 Node* parent = root;
 Node* last;
 State current_state = State::Start;
-std::string name = {};
-std::string square = {};
+std::string name = {"NULL"};
+std::string square = {-0};
 
 
 State Transition(State cur_state, char symbol)
