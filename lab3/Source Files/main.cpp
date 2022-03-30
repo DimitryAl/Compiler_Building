@@ -8,7 +8,7 @@ void Output(std::vector<std::string> strings, std::string exp)
 
     for (auto string : strings)
     {
-        std::cout << "regex_search\t" << string << "\t" << std::regex_search(string, regex) << std::endl;
+       // std::cout << "regex_search\t" << string << "\t" << std::regex_search(string, regex) << std::endl;
         std::cout << "regex_match\t" << string << "\t" << std::regex_match(string, regex) << std::endl;
     }
     std::cout << std::endl;
@@ -89,8 +89,18 @@ int main()
 
     std::cout << "-----TASK 12-----\n";
     std::vector<std::string> strings12 = {"Jan 1987", "May 1969", "Aug 2011"};
-    std::string exp12 = "";
+    std::string exp12 = "(\\w{1,3} (\\d{4}))";
     Output(strings12, exp12);
+
+    std::cout << "-----TASK 13-----\n";
+    std::vector<std::string> strings13 = {"1280x720", "1920x1600", "1024x768"};
+    std::string exp13 = "(\\d{4})x(\\d{3,4})";
+    Output(strings13, exp13); 
+
+    std::cout << "-----TASK 14-----\n";
+    std::vector<std::string> strings14 = {"I love cats", "I love dogs", "I love logs", "I love cogs"};
+    std::string exp14 = "I love ((cats)|(dogs))";
+    Output(strings14, exp14); 
 
     std::cout << std::endl;
 
