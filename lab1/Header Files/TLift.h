@@ -15,7 +15,7 @@ public:
     TLift();
     ~TLift();
     State GetCurrentState();
-    State Transition(/*State current_state, */char symbol);
+    State Transition(/*State current_state, char symbol*/int outer[], int inner[]);
     void SetCurrentState(State state);
 
 };

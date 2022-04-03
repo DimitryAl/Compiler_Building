@@ -1,17 +1,17 @@
 #include <iostream>
 #include <fstream>
-//#include <vector>
-#include <algorithm>
 #include <ctime>
 
-#include "../Header Files/TState.h"
+//#include "../Header Files/TState.h"
 #include "../Header Files/TLift.h"
+#include "../Header Files/TButtons.h"
 #include "../Header Files/Funcs.h"
 
 int main()
 {
     int rand;
     char symbol;
+    TButtons Buttons;
     TLift elevator;
     State temp;
     std::string file_name = "./Resources Files/in.txt";
@@ -31,11 +31,18 @@ int main()
             symbol = GetSymbol(file);
         }
         else
-            symbol = 'n';
+            //symbol = 'n';
+            continue;
 
-        temp = elevator.Transition(symbol);
-        elevator.SetCurrentState(temp);
-    
+        // temp = elevator.Transition(symbol);
+        // elevator.SetCurrentState(temp);
+
+        Buttons.SetOuterButton(symbol - 48, 1);
+        
+        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
+
+
+
         if (elevator.GetCurrentState() == State::Final)
             break;
     }
