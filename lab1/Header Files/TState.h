@@ -3,7 +3,7 @@
 
 enum class State
 {
-    Start,
+   // Start,
     Standing0,
     Going0_Up,
     //Going_Down,
