@@ -165,7 +165,7 @@ char GetSymbol(std::ifstream &file)
 bool CheckData(std::ifstream &file)
 {
 	std::string str;
-	std::string r = "(\"[\\w\\s\\-]+:\\d{1,3}\"(((\\{(\"[\\w\\s\\-]+:\\d{1,3}\"(\\{\"[\\w\\s\\-]+:\\d{1,3}\"+\\})*)+)+)*\\})*)*";
+	std::string r = "(\"[\\w\\s\\-]+:\\d{1,3}\"(\\{(\"[\\w\\s\\-]+:\\d{1,3}\"(\\{(\"[\\w\\s\\-]+:\\d{1,3}\")+\\})*)+\\})*)+";
 	std::regex regexp(r);
 	
 	char symbol;

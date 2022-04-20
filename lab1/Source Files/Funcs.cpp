@@ -10,7 +10,8 @@ bool IsDigit(char symbol) // return true if char is digit else false
 
 char GetSymbol(std::ifstream &file) // read symbol from file
 {
-    return file.get();
+    int sym = file.get() - 48;
+    return sym;
 }
 
 char GenerateFloor()

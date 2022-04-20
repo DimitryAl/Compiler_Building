@@ -2,7 +2,7 @@
 #include <fstream>
 #include <ctime>
 
-//#include "../Header Files/TState.h"
+
 #include "../Header Files/TLift.h"
 #include "../Header Files/TButtons.h"
 #include "../Header Files/Funcs.h"
@@ -10,10 +10,11 @@
 int main()
 {
     int rand;
-    char symbol;
+    int symbol;
+    int symbol2;
     TButtons Buttons;
     TLift elevator;
-    State temp;
+    //State temp;
     std::string file_name = "./Resources Files/in.txt";
     std::ifstream file;
 
@@ -33,15 +34,13 @@ int main()
         else
             //symbol = 'n';
             continue;
-
-        // temp = elevator.Transition(symbol);
-        // elevator.SetCurrentState(temp);
-
-        Buttons.SetOuterButton(symbol - 48, 1);
         
-        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
-
-
+        // outside button is pressed
+        Buttons.SetOuterButton(symbol - 1, 1);
+        // buttons do smth
+        symbol2 = Buttons.Transition(elevator.GetCurrentState());
+        // result goes t olift
+        elevator.Transition(symbol2);
 
         if (elevator.GetCurrentState() == State::Final)
             break;
