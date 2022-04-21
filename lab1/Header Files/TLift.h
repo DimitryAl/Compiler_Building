@@ -9,17 +9,15 @@
 class TLift
 {
 private:
-    // State _current_state = State::Start;
-    State _current_state = State::Standing0;
-    //char _current_floor = 0;
-    //char _target_floor = 0;
-    //std::vector <char> _queue = {};
+
+    State current_state = State::Standing0;
+
     bool CheckButtons(int arr[], int start, int end);
 public:
     TLift();
     ~TLift();
     State GetCurrentState();
-    void Transition(int symbol);
+    void Transition(std::vector <int> pressedOuterButtons, std::vector <int> pressedInnerButtons);
     void SetCurrentState(State state);
 };
 

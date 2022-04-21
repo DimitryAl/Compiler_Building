@@ -11,11 +11,9 @@
 class TButtons
 {
 private:    
-    // int _pressedOuterButtons[FLOORS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    // int _pressedInnerButtons[FLOORS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     std::vector <int> pressedOuterButtons = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     std::vector <int> pressedInnerButtons = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    int destination = 0;
+   // int destination = 0;
 public:
     TButtons() {};
     ~TButtons() {};
@@ -23,7 +21,7 @@ public:
     bool SetOuterButton(int place, int value);
     std::vector <int> GetInnerButtons();
     bool SetInnerButton(int place, int value);
-    int Transition(State state);
+    //int Transition(State state);
 };
 
 #endif
