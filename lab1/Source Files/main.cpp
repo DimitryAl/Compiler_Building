@@ -37,10 +37,9 @@ int main()
         
         // outside button is pressed
         Buttons.SetOuterButton(symbol - 1, 1);
-
-        // result goes to olift
-        elevator.Transition(Buttons.GetOuterButtons, Buttons.GetInnerButtons);
-
+        std::cout << std::endl;
+        // result goes to lift
+        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
         if (elevator.GetCurrentState() == State::Final)
             break;
     }

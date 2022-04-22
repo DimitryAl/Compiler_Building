@@ -3,12 +3,12 @@
 
 enum class State
 {
-    Standing0,
-    Going_Up0,
+    Standing0,  // standing on zero floor
+    Going_Up0,  // going from zero floor to first floor
 
-    Standing1,
-    Going_Up1,
-    Going_Down1,
+    Standing1,      // standing on first floor
+    Going_Up1,      // going from first floor to second
+    Going_Down1,    // going from first floor to zero floor
     
 	Standing2,
     Going_Up2,
@@ -39,8 +39,9 @@ enum class State
     Going_Down8,
     
 	Standing9,
-    Going_Down9/*,
-    Final*/
+    Going_Down9,
+    
+    Final
 };
 
 #endif

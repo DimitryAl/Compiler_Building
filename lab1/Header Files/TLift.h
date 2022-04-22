@@ -10,7 +10,7 @@ class TLift
 {
 private:
 
-    State current_state = State::Standing0;
+    State currentState = State::Standing0;
 
     bool CheckButtons(int arr[], int start, int end);
 public:

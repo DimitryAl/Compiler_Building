@@ -1,7 +1,7 @@
 #include "../Header Files/TLift.h"
 #include "../Header Files/Funcs.h"
 
-
+#include <iostream>
 
 TLift::TLift() {}
 
@@ -9,12 +9,12 @@ TLift::~TLift() {}
 
 State TLift::GetCurrentState()
 {
-	return _current_state;
+	return currentState;
 }
 
 void TLift::SetCurrentState(State state)
 {
-	_current_state = state;
+	currentState = state;
 }
 
 bool TLift::CheckButtons(int arr[], int start, int end)
@@ -28,26 +28,26 @@ bool TLift::CheckButtons(int arr[], int start, int end)
 
 void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> pressedInnerButtons)
 {
-	switch (current_state)
+	switch (currentState)
 	{
 	case State::Standing0:
-		int i = 0;
-		// if inner button is pressed, passager goes out
+		// if inner button is pressed, passanger goes out
 		if (pressedInnerButtons[0] == 1)
 		{
 			std::cout << " passager(s) go out\n";
 			pressedInnerButtons[0] = 0;
-		}
-		// if outer button on higher floor is pressed, go up
-		for (i = 1; i < FLOORS; i++)
-		{
-			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up1);
 		}
 		// if smbd calls lift on this floor, get new passanger
 		if (pressedOuterButtons[0] == 1)
 		{
 			//get new floor from passanger
 			pressedOuterButtons[0] = 0;
+		}
+		// if outer button on higher floor is pressed, go up
+		for (int i = 1; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up0);
+			return;
 		}
 		break;
 	case State::Going_Up0:
@@ -58,13 +58,17 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 			break;
 		}
 		// if outer button on higher floor is pressed, go up
-		for (i = 1; i < FLOORS; i++)
+		for (int i = 1; i < FLOORS; i++)
 		{
+			// replace OuterButtons on innerButtons ???
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up1);
-			break;
+			return;
 		}
+		SetCurrentState(State::Standing1);
+		break;
+
 	case State::Standing1:
-		// if inner button is pressed, passager goes out
+		// if inner button is pressed, passanger goes out
 		if (pressedInnerButtons[1] == 1)
 		{
 			std::cout << " passager(s) go out\n";
@@ -77,16 +81,16 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 			pressedOuterButtons[1] = 0;
 		}
 		// if outer button on higher floor is pressed, go up
-		for (i = 2; i < FLOORS; i++)
+		for (int i = 2; i < FLOORS; i++)
 		{
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up1);
-			break;
+			return;
 		}
 		// if outer button on lower floor is pressed, go down
-		for (i = 0; i >= 0; i--)
+		for (int i = 0; i >= 0; i--)
 		{
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Down1);
-			break;
+			return;
 		}
 		break;
 	case State::Going_Up1:
@@ -94,18 +98,141 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 		if (pressedInnerButtons[2] == 1)
 		{
 			SetCurrentState(State::Standing2);
-			break;
+			return;
 		}
 		// if outer button on higher floor is pressed, go up
-		for (i = 2; i < FLOORS; i++)
+		for (int i = 2; i < FLOORS; i++)
 		{
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
-			break;
+			return;
 		}
 		break;
 	case State::Going_Down1:
-
+		//if smbd wants to leave on 0st floor
+		if (pressedInnerButtons[0] == 1)
+		{
+			SetCurrentState(State::Standing0);
+			return;
+		}
+		else SetCurrentState(State::Standing0);
 		break;
+
+	case State::Standing2:
+		// if inner button is pressed, passanger goes out
+		if (pressedInnerButtons[2] == 1)
+		{
+			std::cout << " passager(s) go out\n";
+			pressedInnerButtons[2] = 0;
+		}
+		// if smbd calls lift on this floor, get new passanger
+		if (pressedOuterButtons[2] == 1)
+		{
+			//get new floor from passanger
+			pressedOuterButtons[2] = 0;
+		}
+		// if outer button on higher floor is pressed, go up
+		for (int i = 3; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
+			return;
+		}
+		// if outer button on lower floor is pressed, go down
+		for (int i = 1; i >= 0; i--)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Down2);
+			return;
+		}
+		break;
+	case State::Going_Up2:
+		//if smbd wants to leave on 3nd floor
+		if (pressedInnerButtons[3] == 1)
+		{
+			SetCurrentState(State::Standing3);
+			return;
+		}
+		// if outer button on higher floor is pressed, go up
+		for (int i = 3; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up3);
+			return;
+		}
+		break;
+	case State::Going_Down2:
+		
+		/////
+		//// make loop from 1 to 0
+		////
+		// for (int i = 1; i >=00; i--)
+		// {
+		// 	if (pressedInnerButtons)
+		// }
+		//if smbd wants to leave on 1st floor
+		if (pressedInnerButtons[1] == 1)
+		{
+			SetCurrentState(State::Standing1);
+			return;
+		}
+		//if noone wants to leave on 1 floor
+		else SetCurrentState(State::Going_Down1);
+		break;
+
+	// 3 floor
+	case State::Standing3:
+		// if inner button is pressed, passanger goes out
+		if (pressedInnerButtons[3] == 1)
+		{
+			std::cout << " passager(s) go out\n";
+			pressedInnerButtons[3] = 0;
+		}
+		// if smbd calls lift on this floor, get new passanger
+		if (pressedOuterButtons[3] == 1)
+		{
+			//get new floor from passanger
+			pressedOuterButtons[3] = 0;
+		}
+		// if outer button on higher floor is pressed, go up
+		for (int i = 3; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
+			return;
+		}
+		// if outer button on lower floor is pressed, go down
+		for (int i = 1; i >= 0; i--)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Down2);
+			return;
+		}
+		break;
+	case State::Going_Up3:
+		//if smbd wants to leave on 3nd floor
+		if (pressedInnerButtons[3] == 1)
+		{
+			SetCurrentState(State::Standing3);
+			return;
+		}
+		// if outer button on higher floor is pressed, go up
+		for (int i = 3; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up3);
+			return;
+		}
+		SetCurrentState(State::Standing4);
+		break;
+	case State::Going_Down3:
+		//if smbd wants to leave on lower floor
+		for (int i = 2; i >= 0; i--)
+		{
+			SetCurrentState(State::Going_Down2);
+		}
+		if (pressedInnerButtons[2] == 1)
+		{
+			SetCurrentState(State::Standing2);
+			return;
+		}
+		//if noone wants to leave on 1 floor
+		//else SetCurrentState(State::Going_Down1);
+		break;
+
     default:
         break;
     }
