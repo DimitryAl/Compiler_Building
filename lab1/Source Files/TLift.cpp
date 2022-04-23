@@ -43,30 +43,37 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 			//get new floor from passanger
 			pressedOuterButtons[0] = 0;
 		}
-		// if outer button on higher floor is pressed, go up
+		// if inner button on higher floor is pressed, go up
 		for (int i = 1; i < FLOORS; i++)
 		{
-			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up0);
+			if (pressedInnerButtons[i] != 0) SetCurrentState(State::Going_Up1);
 			return;
 		}
-		break;
-	case State::Going_Up0:
-		//if smbd wants to leave on 1st floor
-		if (pressedInnerButtons[1] == 1)
-		{
-			SetCurrentState(State::Standing1);
-			break;
-		}
 		// if outer button on higher floor is pressed, go up
 		for (int i = 1; i < FLOORS; i++)
 		{
-			// replace OuterButtons on innerButtons ???
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up1);
 			return;
 		}
-		SetCurrentState(State::Standing1);
 		break;
+	// case State::Going_Up0:
+	// 	//if smbd wants to leave on 1st floor
+	// 	if (pressedInnerButtons[1] == 1)
+	// 	{
+	// 		SetCurrentState(State::Standing1);
+	// 		break;
+	// 	}
+	// 	// if inner button on higher floor is pressed, go up
+	// 	for (int i = 1; i < FLOORS; i++)
+	// 	{
+	// 		// replace OuterButtons on innerButtons ???
+	// 		if (pressedInnerButtons[i] != 0) SetCurrentState(State::Going_Up1);
+	// 		return;
+	// 	}
+	// 	SetCurrentState(State::Standing1); // ???
+	// 	break;
 
+	// states for the first floor
 	case State::Standing1:
 		// if inner button is pressed, passanger goes out
 		if (pressedInnerButtons[1] == 1)
@@ -80,24 +87,48 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 			//get new floor from passanger
 			pressedOuterButtons[1] = 0;
 		}
-		// if outer button on higher floor is pressed, go up
+		// if inner button on higher floor is pressed, go up
 		for (int i = 2; i < FLOORS; i++)
 		{
-			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up1);
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
+			return;
+		}
+		// if outer button on higher floor is pressed, go down
+		for (int i = 2; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
+			return;
+		}
+		// if inner button on lower floor is pressed, go up
+		for (int i = 0; i >= 0; i--)
+		{
+			if (pressedInnerButtons[i] != 0) SetCurrentState(State::Standing0);
 			return;
 		}
 		// if outer button on lower floor is pressed, go down
 		for (int i = 0; i >= 0; i--)
 		{
-			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Down1);
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Standing0);
 			return;
 		}
 		break;
 	case State::Going_Up1:
-		//if smbd wants to leave on 2nd floor
-		if (pressedInnerButtons[2] == 1)
+		// if inner button is pressed, passanger goes out
+		if (pressedInnerButtons[1] == 1)
 		{
-			SetCurrentState(State::Standing2);
+			std::cout << " passager(s) go out\n";
+			pressedInnerButtons[1] = 0;
+		}
+		// // if smbd calls lift on this floor, get new passanger
+		// if (pressedOuterButtons[1] == 1)
+		// {
+		// 	//get new floor from passanger
+		// 	pressedOuterButtons[1] = 0;
+		// }
+		// if inner button on higher floor is pressed, go up
+		for (int i = 2; i < FLOORS; i++)
+		{
+			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
 			return;
 		}
 		// if outer button on higher floor is pressed, go up
@@ -106,17 +137,19 @@ void TLift::Transition(std::vector <int> pressedOuterButtons, std::vector <int> 
 			if (pressedOuterButtons[i] != 0) SetCurrentState(State::Going_Up2);
 			return;
 		}
+		SetCurrentState(State::Standing1);
 		break;
 	case State::Going_Down1:
-		//if smbd wants to leave on 0st floor
+		//if smbd wants to leave on 0 floor
 		if (pressedInnerButtons[0] == 1)
 		{
 			SetCurrentState(State::Standing0);
 			return;
 		}
-		else SetCurrentState(State::Standing0);
+		else SetCurrentState(State::Standing1);
 		break;
 
+	// states for the second floor
 	case State::Standing2:
 		// if inner button is pressed, passanger goes out
 		if (pressedInnerButtons[2] == 1)

@@ -1,3 +1,9 @@
+Standing : go out, go in, go up, go down
+Going_Up : go out, go up, stand
+Going_Down : go out, go down, stand 
+
+
+
 digraph finite_state_machine {
 	rankdir=LR;
 	size="8,5"
