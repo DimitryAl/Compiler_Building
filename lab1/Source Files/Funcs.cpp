@@ -13,8 +13,3 @@ char GetSymbol(std::ifstream &file) // read symbol from file
     int sym = file.get() - 48;
     return sym;
 }
-
-char GenerateFloor()
-{
-    return '5';
-}
