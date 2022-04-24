@@ -20,7 +20,7 @@ public:
     std::vector <int> GetOuterButtons();
     bool SetOuterButton(int place, int value);
     std::vector <int> GetInnerButtons();
-    bool SetInnerButton(int place, int value);
+    //bool SetInnerButton(int place, int value);
     //int Transition(State state);
 };
 

@@ -1,11 +1,24 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-
+#include <chrono>
+#include <thread>
 
 #include "../Header Files/TLift.h"
 #include "../Header Files/TButtons.h"
-#include "../Header Files/Funcs.h"
+//#include "../Header Files/Funcs.h"
+
+bool isDigit(int symbol)
+{
+    if ((0 <= symbol && symbol <= 9)) return true;
+    else return false;
+}
+
+int GetSymbol(std::ifstream &file) // read symbol from file
+{
+    int sym = file.get() - 48;
+    return sym;
+}
 
 int main()
 {
@@ -14,7 +27,7 @@ int main()
     int symbol2;
     TButtons Buttons;
     TLift elevator;
-    //State temp;
+    // State temp;
     std::string file_name = "./Resources Files/in.txt";
     std::ifstream file;
 
@@ -22,24 +35,57 @@ int main()
     if (!file)
         return 1;
 
-    std::srand(std::time(nullptr)); // use current time as seed for random generator
+//    std::srand(std::time(nullptr)); // use current time as seed for random generator
+
+    // std::cout << "before while\n";
 
     while (1)
     {
-        rand = std::rand() / (RAND_MAX / 3);
-        if (rand = 0)
+      //  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+        // std::cout << (int)elevator.GetCurrentState() << std::endl;
+
+        // rand = std::rand() % 3;
+        // if (rand == 0)
+        // {
+        //     symbol = GetSymbol(file);
+        //     std::cout << symbol << "\n";
+        //     if (!(48 <= symbol && symbol <= 57))
+        //     {
+        //         // elevator.SetCurrentState(State::Final);
+        //     }
+        //     else
+        //     {
+        //         std::cout << "Lift was called on " << symbol << " floor" << std::endl;
+        //         bool flag = Buttons.SetOuterButton(symbol, 1);
+        //         if (!flag)
+        //             break;
+        //     }
+        // }
+        // else
+        //     continue;
+        symbol = GetSymbol(file);
+        if (isDigit(symbol))
         {
-            symbol = GetSymbol(file);
+            std::cout << "Lift was called on " << symbol << " floor" << std::endl;
+            bool flag = Buttons.SetOuterButton(symbol, 1);
+            if (!flag)
+                break;
         }
-        else
-            //symbol = 'n';
-            continue;
-        
         // outside button is pressed
-        Buttons.SetOuterButton(symbol - 1, 1);
-        std::cout << std::endl;
+
+        // std::vector <int> temp = Buttons.GetOuterButtons();
+        // for (int i = 0; i < 10;i++)
+        // {
+        //     std::cout << temp[i] << " ";
+        // }
+        // std::cout <<"\t";
+        // if (!flag)
+        //     break;
+
         // result goes to lift
-        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
+        elevator.Transition(&Buttons.GetOuterButtons(), &Buttons.GetInnerButtons());
+
         if (elevator.GetCurrentState() == State::Final)
             break;
     }
