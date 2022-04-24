@@ -17,11 +17,9 @@ private:
 public:
     TButtons() {};
     ~TButtons() {};
-    std::vector <int> GetOuterButtons();
+    std::vector <int>& GetOuterButtons();
     bool SetOuterButton(int place, int value);
-    std::vector <int> GetInnerButtons();
-    //bool SetInnerButton(int place, int value);
-    //int Transition(State state);
+    std::vector <int>& GetInnerButtons();
 };
 
 #endif

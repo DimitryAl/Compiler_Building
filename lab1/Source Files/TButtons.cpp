@@ -1,7 +1,7 @@
 #include "../Header Files/TButtons.h"
 #include "../Header Files/TState.h"
 
-std::vector <int> TButtons::GetOuterButtons()
+std::vector <int>& TButtons::GetOuterButtons()
 {
     return pressedOuterButtons;
 }
@@ -18,7 +18,7 @@ bool TButtons::SetOuterButton(int place, int value)
     return true;
 }
 
-std::vector <int> TButtons::GetInnerButtons()
+std::vector <int>& TButtons::GetInnerButtons()
 {
     return pressedInnerButtons;
 }

@@ -38,9 +38,11 @@ int main()
 //    std::srand(std::time(nullptr)); // use current time as seed for random generator
 
     // std::cout << "before while\n";
-
+    int cnt = 0;
     while (1)
     {
+        cnt++;
+        if (cnt == 20) break;
       //  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
         // std::cout << (int)elevator.GetCurrentState() << std::endl;
@@ -72,19 +74,9 @@ int main()
             if (!flag)
                 break;
         }
-        // outside button is pressed
-
-        // std::vector <int> temp = Buttons.GetOuterButtons();
-        // for (int i = 0; i < 10;i++)
-        // {
-        //     std::cout << temp[i] << " ";
-        // }
-        // std::cout <<"\t";
-        // if (!flag)
-        //     break;
 
         // result goes to lift
-        elevator.Transition(&Buttons.GetOuterButtons(), &Buttons.GetInnerButtons());
+        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
 
         if (elevator.GetCurrentState() == State::Final)
             break;

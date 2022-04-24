@@ -39,7 +39,6 @@ enum class State
     Going_Down8,
     
 	Standing9,
-    Going_Down9,
     
     Final
 };
