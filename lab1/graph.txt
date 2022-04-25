@@ -40,9 +40,9 @@ digraph finite_state_machine {
         S4 -> GU5 [ label = "in <= 0000011111 or out <= 0000011111 "];
         S4 -> GD3  [ label = "in > 0001000000 or out > 0001000000" ]; 
         GU4 -> GU5 [ label = "in <= 0000011111 or out <= 0000011111 "];
-        GU4 -> S4 [ label = "in = 0001000000 or out = 0001000000" ];
-        GD4 -> GD3 [ label = "in > 0001000000 or out > 0001000000" ];
-        GD4 -> S4 [ label = "in = 0001000000 or out = 0001000000" ];
+        GU4 -> S4 [ label = "in = 00001000000 or out = 00001000000" ];
+        GD4 -> GD3 [ label = "in > 00001000000 or out > 00001000000" ];
+        GD4 -> S4 [ label = "in = 00001000000 or out = 00001000000" ];
 
         S5 -> GU6 [ label = "in <= 0000001111 or out <= 0000001111 "];
         S5 -> GD4 [ label = "in >= 0000100000 or out >= 0000100000" ]; 
@@ -83,7 +83,7 @@ digraph finite_state_machine {
         node [shape = doublecircle]; S0 S1 S2 S3 S4 S5 S6 S7 S8 S9;
 	node [shape = circle];
 
-	S0 -> GU1;
+       S0 -> GU1;
 
         S1 -> GU2 ;
         S1 -> S0 ; 
@@ -142,4 +142,83 @@ digraph finite_state_machine {
         GD8 -> S8;
 
         S9 -> GD8;
+}
+
+//v3
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,5"
+
+        node [shape = doublecircle]; S0 S1 S2 S3 S4 S5 S6 S7 S8 S9;
+	node [shape = circle];
+
+	S0 -> GU1 [label = "T1"];
+        S0 -> S0 [label = "T27"]
+
+        S1 -> GU2 [label = "T2"];
+        S1 -> S0 [label = "T3"]; 
+        S1 -> S1 [label = "T28"]
+        GU1 -> GU2[label = "T2"];
+        GU1 -> S1 [label = "T1"];
+        GD1 -> S0 [label = "T1"];
+        GD1 -> S1 [label = "T3"];
+
+        S2 -> GU3 [label = "T4"];
+        S2 -> GD1 [label = "T5"];
+        S2 -> S2 [ label = "T6"] 
+        GU2 -> GU3 [label = "T4"];
+        GU2 -> S2 [label = "T6"];
+        GD2 -> GD1[label = "T5"];
+        GD2 -> S2 [label = "T6"];
+
+        S3 -> GU4 [label = "T7"];
+        S3 -> GD2[label = "T8"]; 
+        S3 -> S3[label = "T9"];
+        GU3 -> GU4[label = "T7"];
+        GU3 -> S3[label = "T9"];
+        GD3 -> GD2[label = "T8"];
+        GD3 -> S3[label = "T9"];
+
+        S4 -> GU5[label = "T10"];
+        S4 -> GD3[label = "T11"];
+        S4 -> S4[label = "T12"]; 
+        GU4 -> GU5[label = "T10"];
+        GU4 -> S4[label = "T12"];
+        GD4 -> GD3[label = "T11"];
+        GD4 -> S4[label = "T12"];
+
+        S5 -> GU6 [label = "T13"];
+        S5 -> GD4[label = "T14"]; 
+        S5 -> S5[label = "T15"];
+        GU5 -> GU6[label = "T13"];
+        GU5 -> S5[label = "T15"];
+        GD5 -> GD4[label = "T14"];
+        GD5 -> S5[label = "T15"];
+
+        S6 -> GU7 [label = "T16"];
+        S6 -> GD5[label = "T17"]; 
+        S6 -> S6[label = "T18"];
+        GU6 -> GU7[label = "T16"];
+        GU6 -> S6[label = "T18"];
+        GD6 -> GD5[label = "T17"];
+        GD6 -> S6[label = "T18"];
+
+        S7 -> GU8 [label = "T19"];
+        S7 -> GD6[label = "T20"]; 
+        S7 -> S7[label = "T21"];
+        GU7 -> GU8[label = "T19"];
+        GU7 -> S7[label = "T21"];
+        GD7 -> GD6[label = "T20"];
+        GD7 -> S7[label = "T21"];
+
+        S8 -> S9 [label = "T22"];
+        S8 -> GD7[label = "T23"]; 
+        S8 -> S8[label = "T24"];
+        GU8 -> S9[label = "T22"];
+        GU8 -> S8[label = "T24"];
+        GD8 -> GD7[label = "T23"];
+        GD8 -> S8[label = "T24"];
+
+        S9 -> GD8 [label = "T25"]
+        S9 -> S9 [label = "T26"];
 }
