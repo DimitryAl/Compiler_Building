@@ -9,8 +9,10 @@
 
 bool isDigit(int symbol)
 {
-    if ((0 <= symbol && symbol <= 9)) return true;
-    else return false;
+    if ((0 <= symbol && symbol <= 9))
+        return true;
+    else
+        return false;
 }
 
 int GetSymbol(std::ifstream &file) // read symbol from file
@@ -23,7 +25,6 @@ int main()
 {
     int rand;
     int symbol;
-    int symbol2;
     TButtons Buttons;
     TLift elevator;
     std::string file_name = "./Resources Files/in.txt";
@@ -51,13 +52,21 @@ int main()
                 if (!flag)
                     break;
             }
+            else
+            {
+                if (symbol != '\n')
+                {
+                    std::cout << "Wrong input symbol!\n";
+                    elevator.SetCurrentState(State::Final);
+                }
+            }
         }
-
-        // result goes to lift
-        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
 
         if (elevator.GetCurrentState() == State::Final)
             break;
+
+        // result goes to lift
+        elevator.Transition(Buttons.GetOuterButtons(), Buttons.GetInnerButtons());
     }
 
     return 0;
