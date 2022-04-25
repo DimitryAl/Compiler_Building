@@ -28,10 +28,9 @@ bool TLift::CheckButtons(int arr[], int start, int end)
 
 void TLift::PassengerOut(std::vector<int>& arr, int i)
 {
-	// if (arr[i] == 1)
 	if (arr[i] == 1)
 	{
-		std::cout << "Passenger(s) go out\n";
+		std::cout << "Passenger(s) go out";
 		arr[i] = 0;
 	}
 }
@@ -43,7 +42,7 @@ int TLift::GetFloor()
 	{
 		std::cout << "Enter floor's number: ";
 		std::cin >> symbol;
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	} while (!(48 <= symbol && symbol <= 57));
 	
 	return (symbol - 48);
