@@ -16,39 +16,39 @@ digraph finite_state_machine {
 
 	S0 -> GU1 [ label = "in <= 0100000000 or out <= 0100000000" ];
 
-        S1 -> GU2 [ label = "in <= 10000000 or out <= 10000000" ];
-        S1 -> S0 [ label = "in = 10000000000 or out = 10000000000" ]; 
-        GU1 -> GU2 [ label = "in <= 10000000 or out <= 10000000" ];
-        GU1 -> S1 [ label = "in = 0 or out = 0" ];
-        GD1 -> S0 [ label = "in = 10000000000 or out = 10000000000" ];
-        GD1 -> S1 [ label = "in = 0 or out = 0" ];
+        S1 -> GU2 [ label = "in <= 0010000000 or out <= 0010000000" ];
+        S1 -> S0 [ label = "in = 1000000000 or out = 1000000000" ]; 
+        GU1 -> GU2 [ label = "in <= 0010000000 or out <= 0010000000" ];
+        GU1 -> S1 [ label = "in = 0100000000 or out = 0100000000" ];
+        GD1 -> S0 [ label = "in = 1000000000 or out = 1000000000" ];
+        GD1 -> S1 [ label = "in = 0100000000 or out = 0100000000" ];
 
-        S2 -> GU3 [ label = "in <= 001111111 or out <= 001111111 " ];
-        S2 -> GD1 [ label = "in >= 010000000 or out >= 010000000" ]; 
-        GU2 -> GU3 [ label = "in <= 001111111 or out <= 001111111 " ];
-        GU2 -> S2 [ label = "in = 0 or out = 0" ];
-        GD2 -> GD1 [ label = "in >= 010000000 or out >= 010000000" ] ;
-        GD2 -> S2 [ label = "in = 0 or out = 0" ];
+        S2 -> GU3 [ label = "in < 0010000000 or out < 0010000000" ];
+        S2 -> GD1 [ label = "in > 0010000000 or out > 0010000000" ]; 
+        GU2 -> GU3 [ label = "in < 0010000000 or out < 0010000000 " ];
+        GU2 -> S2 [ label = "in = 0010000000 or out = 00100000000" ];
+        GD2 -> GD1 [ label = "in > 0010000000 or out > 0010000000" ] ;
+        GD2 -> S2 [ label = "in = 0010000000 or out = 00100000000" ];
 
-        S3 -> GU4 [ label = "in <= 000111111 or out <= 000111111 "];
-        S3 -> GD2 [ label = "in >= 001000000 or out >= 001000000" ]; 
-        GU3 -> GU4 [ label = "in <= 000111111 or out <= 000111111 "];
-        GU3 -> S3 [ label = "in = 0 or out = 0" ] ;
-        GD3 -> GD2 [ label = "in >= 001000000 or out >= 001000000" ];
-        GD3 -> S3 [ label = "in = 0 or out = 0" ];
+        S3 -> GU4 [ label = "in < 0001000000 or out < 0001000000 "];
+        S3 -> GD2 [ label = "in > 0001000000 or out > 0001000000" ]; 
+        GU3 -> GU4 [ label = "in < 0001000000 or out < 0001000000 "];
+        GU3 -> S3 [ label = "in = 00010000000 or out = 00010000000" ] ;
+        GD3 -> GD2 [ label = "in > 0001000000 or out > 0001000000" ];
+        GD3 -> S3 [ label = "in = 00010000000 or out = 00010000000" ];
 
-        S4 -> GU5 [ label = "in <= 000011111 or out <= 000011111 "];
-        S4 -> GD3  [ label = "in >= 001000000 or out >= 001000000" ]; 
-        GU4 -> GU5 [ label = "in <= 000011111 or out <= 000011111 "];
-        GU4 -> S4 [ label = " in = 0 or out = 0" ];
-        GD4 -> GD3 [ label = "in >= 001000000 or out >= 001000000" ];
-        GD4 -> S4 [ label = " in = 0 or out = 0" ];
+        S4 -> GU5 [ label = "in <= 0000011111 or out <= 0000011111 "];
+        S4 -> GD3  [ label = "in > 0001000000 or out > 0001000000" ]; 
+        GU4 -> GU5 [ label = "in <= 0000011111 or out <= 0000011111 "];
+        GU4 -> S4 [ label = "in = 0001000000 or out = 0001000000" ];
+        GD4 -> GD3 [ label = "in > 0001000000 or out > 0001000000" ];
+        GD4 -> S4 [ label = "in = 0001000000 or out = 0001000000" ];
 
-        S5 -> GU6 [ label = "in <= 000001111 or out <= 000001111 "];
-        S5 -> GD4 [ label = "in >= 000100000 or out >= 000100000" ]; 
+        S5 -> GU6 [ label = "in <= 0000001111 or out <= 0000001111 "];
+        S5 -> GD4 [ label = "in >= 0000100000 or out >= 0000100000" ]; 
         GU5 -> GU6  [ label = "in <= 000001111 or out <= 000001111 "];
         GU5 -> S5 [ label = " in = 0 or out = 0" ];
-        GD5 -> GD4 [ label = "in >= 000100000 or out >= 000100000" ];
+        GD5 -> GD4 [ label = "in > 0000100000 or out >= 0000100000" ];
         GD5 -> S5 [ label = " in = 0 or out = 0" ];
 
         S6 -> GU7 [ label = "in <= 000000111 or out <= 000000111 "];
@@ -65,12 +65,12 @@ digraph finite_state_machine {
         GD7 -> GD6 [ label = "in >= 000001000 or out >= 000001000" ];
         GD7 -> S7 [ label = " in = 0 or out = 0" ];
 
-        S8 -> S9  [ label = "in = 000000001 or out = 000000001 "];
-        S8 -> GD7 [ label = "in >= 000000100 or out >= 000000100" ]; 
+        S8 -> S9  [ label = "in = 0000000001 or out = 0000000001 "];
+        S8 -> GD7 [ label = "in > 0000000100 or out > 000000100" ]; 
         GU8 -> S9 [ label = "in = 000000001 or out = 000000001 "];
-        GU8 -> S8 [ label = " in = 0 or out = 0" ];
-        GD8 -> GD7 [ label = "in >= 000000100 or out >= 000000100" ];
-        GD8 -> S8 [ label = " in = 0 or out = 0" ];
+        GU8 -> S8 [ label = "in = 0000000100 or out = 000000100" ];
+        GD8 -> GD7 [ label = "in > 000000100 or out > 000000100" ];
+        GD8 -> S8 [ label = "in = 0000000100 or out = 000000100" ];
 
         S9 -> GD8 [label = "in >= 000000010 out >= 000000010"];
 }
