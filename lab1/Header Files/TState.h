@@ -4,7 +4,6 @@
 enum class State
 {
     Standing0,  // standing on zero floor
-   // Going_Up0,  // going from zero floor to first floor
 
     Standing1,      // standing on first floor
     Going_Up1,      // on first floor and going up 
