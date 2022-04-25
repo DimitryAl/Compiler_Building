@@ -25,6 +25,7 @@ int main()
 {
     int rand;
     int symbol;
+    bool newLine = false;
     TButtons Buttons;
     TLift elevator;
     std::string file_name = "./Resources Files/in.txt";
@@ -41,23 +42,30 @@ int main()
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-        rand = std::rand() % 3;
-        if (rand == 0)
+        if (!newLine)
         {
-            symbol = GetSymbol(file);
-            if (isDigit(symbol))
+            rand = std::rand() % 3;
+            if (rand == 0)
             {
-                std::cout << "Lift was called on " << symbol << " floor" << std::endl;
-                bool flag = Buttons.SetOuterButton(symbol, 1);
-                if (!flag)
-                    break;
-            }
-            else
-            {
-                if (symbol != '\n')
+                symbol = GetSymbol(file);
+                if (isDigit(symbol))
                 {
-                    std::cout << "Wrong input symbol!\n";
-                    elevator.SetCurrentState(State::Final);
+                    std::cout << "Lift was called on " << symbol << " floor" << std::endl;
+                    bool flag = Buttons.SetOuterButton(symbol, 1);
+                    if (!flag)
+                        break;
+                }
+                else
+                {
+                    if (symbol == '\n' - 48)
+                    {
+                        newLine = true;
+                    }
+                    else 
+                    {
+                        std::cout << "Wrong input symbol!\n";
+                        elevator.SetCurrentState(State::Final);
+                    }
                 }
             }
         }

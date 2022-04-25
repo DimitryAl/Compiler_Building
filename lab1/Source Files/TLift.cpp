@@ -30,7 +30,7 @@ void TLift::PassengerOut(std::vector<int>& arr, int i)
 {
 	if (arr[i] == 1)
 	{
-		std::cout << "Passenger(s) go out";
+		std::cout << "Passenger(s) go out\n";
 		arr[i] = 0;
 	}
 }
