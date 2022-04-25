@@ -13,8 +13,8 @@ private:
     State currentState = State::Standing0;
 
     bool CheckButtons(int arr[], int start, int end);
-    void PassangerOut(std::vector <int>& arr, int i);
-    int PassangerIn(std::vector <int>& arr, int i);
+    void PassengerOut(std::vector <int>& arr, int i);
+    int PassengerIn(std::vector <int>& arr, int i);
     int GetFloor();
 public:
     TLift();

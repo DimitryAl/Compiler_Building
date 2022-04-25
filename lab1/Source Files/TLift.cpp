@@ -26,12 +26,12 @@ bool TLift::CheckButtons(int arr[], int start, int end)
 	return false;
 }
 
-void TLift::PassangerOut(std::vector<int>& arr, int i)
+void TLift::PassengerOut(std::vector<int>& arr, int i)
 {
 	// if (arr[i] == 1)
 	if (arr[i] == 1)
 	{
-		std::cout << " passager(s) go out\n";
+		std::cout << "Passenger(s) go out\n";
 		arr[i] = 0;
 	}
 }
@@ -49,7 +49,7 @@ int TLift::GetFloor()
 	return (symbol - 48);
 }
 
-int TLift::PassangerIn(std::vector<int>& arr, int i)
+int TLift::PassengerIn(std::vector<int>& arr, int i)
 {
 	if (arr[i] == 1)
 	{
@@ -72,10 +72,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		std::cout << "Lift standing on 0 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 0);
+		PassengerOut(pressedInnerButtons, 0);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 0);
+		temp = PassengerIn(pressedOuterButtons, 0);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -103,12 +103,12 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 	// states for the first floor
 	case State::Standing1:
 		
-		std::cout << "Lift on 1 floor STANDING\n";
+		std::cout << "Lift standing on 1 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 1);
+		PassengerOut(pressedInnerButtons, 1);
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 1);
+		temp = PassengerIn(pressedOuterButtons, 1);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 		// if inner button on higher floor is pressed, go up
@@ -150,10 +150,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		break;
 	case State::Going_Up1:
 
-		std::cout << "Lift on 1 floor UP\n";
+		std::cout << "Lift come on 1 floor from 0 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 1);
+		PassengerOut(pressedInnerButtons, 1);
 		// if inner button on higher floor is pressed, go up
 		for (int i = 2; i < FLOORS; i++)
 		{
@@ -176,14 +176,14 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		break;
 	case State::Going_Down1:
 
-		std::cout << "Lift on 1 floor\n";
+		std::cout << "Lift come on 1 floor from 2 floor\n";
 
 		// if smbd wants to enter
-		temp = PassangerIn(pressedOuterButtons, 1);
+		temp = PassengerIn(pressedOuterButtons, 1);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 		// id smbd wants to leave on 1 floor
-		PassangerOut(pressedInnerButtons, 1);
+		PassengerOut(pressedInnerButtons, 1);
 		// if smbd wants to leave on 0 floor
 		if (pressedInnerButtons[0] == 1)
 		{
@@ -202,13 +202,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 	// states for the second floor
 	case State::Standing2:
 
-		std::cout << "Lift on 2 floor STANDING\n";
+		std::cout << "Lift standing on 2 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 2);
+		PassengerOut(pressedInnerButtons, 2);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 2);
+		temp = PassengerIn(pressedOuterButtons, 2);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -254,10 +254,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		break;
 	case State::Going_Up2:
 
-		std::cout << "Lift on 2 floor UP\n";
+		std::cout << "Lift come on 2 floor from 1 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 2);
+		PassengerOut(pressedInnerButtons, 2);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 3; i < FLOORS; i++)
@@ -281,15 +281,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing2);
 		break;
 	case State::Going_Down2:
-		std::cout << "Lift on 2 floor\n";
+		std::cout << "Lift come on 2 floor from 3 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 2);
+		temp = PassengerIn(pressedOuterButtons, 2);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 2);
+		PassengerOut(pressedInnerButtons, 2);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 1; i >= 00; i--)
@@ -316,13 +316,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 
 	// 3 floor
 	case State::Standing3:
-		std::cout << "Lift on 3 floor\n";
+		std::cout << "Lift standing on 3 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 3);
+		PassengerOut(pressedInnerButtons, 3);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 3);
+		temp = PassengerIn(pressedOuterButtons, 3);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -367,10 +367,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 		break;
 	case State::Going_Up3:
-		std::cout << "Lift on 3 floor\n";
+		std::cout << "Lift come on 3 floor from 2 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 3);
+		PassengerOut(pressedInnerButtons, 3);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 4; i < FLOORS; i++)
@@ -394,15 +394,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing3);
 		break;
 	case State::Going_Down3:
-		std::cout << "Lift on 3 floor\n";
+		std::cout << "Lift come on 3 floor from 4 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 3);
+		temp = PassengerIn(pressedOuterButtons, 3);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 3);
+		PassengerOut(pressedInnerButtons, 3);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 2; i >= 0; i--)
@@ -429,13 +429,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 
 	// floor 4
 	case State::Standing4:
-		std::cout << "Lift on 4 floor\n";
+		std::cout << "Lift standing on 4 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 4);
+		PassengerOut(pressedInnerButtons, 4);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 4);
+		temp = PassengerIn(pressedOuterButtons, 4);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -481,10 +481,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		break;
 	case State::Going_Up4:
 
-		std::cout << "Lift on 4 floor\n";
+		std::cout << "Lift come on 4 floor from 3 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 4);
+		PassengerOut(pressedInnerButtons, 4);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 5; i < FLOORS; i++)
@@ -509,15 +509,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		break;
 	case State::Going_Down4:
 
-		std::cout << "Lift on 4 floor\n";
+		std::cout << "Lift come on 4 floor from 5 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 4);
+		temp = PassengerIn(pressedOuterButtons, 4);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 4);
+		PassengerOut(pressedInnerButtons, 4);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 3; i >= 0; i--)
@@ -545,13 +545,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 	// floor 5
 	case State::Standing5:
 
-		std::cout << "Lift on 5 floor\n";
+		std::cout << "Lift standing on 5 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 5);
+		PassengerOut(pressedInnerButtons, 5);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 5);
+		temp = PassengerIn(pressedOuterButtons, 5);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -596,10 +596,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 		break;
 	case State::Going_Up5:
-		std::cout << "Lift on 5 floor\n";
+		std::cout << "Lift come on 5 floor from 4 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 5);
+		PassengerOut(pressedInnerButtons, 5);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 6; i < FLOORS; i++)
@@ -623,15 +623,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing5);
 		break;
 	case State::Going_Down5:
-		std::cout << "Lift on 5 floor\n";
+		std::cout << "Lift come on 5 floor from 6 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 5);
+		temp = PassengerIn(pressedOuterButtons, 5);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 5);
+		PassengerOut(pressedInnerButtons, 5);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 4; i >= 0; i--)
@@ -658,13 +658,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 
 	// floor 6
 	case State::Standing6:
-		std::cout << "Lift on 6 floor\n";
+		std::cout << "Lift standing on 6 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 6);
+		PassengerOut(pressedInnerButtons, 6);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 6);
+		temp = PassengerIn(pressedOuterButtons, 6);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -709,10 +709,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 		break;
 	case State::Going_Up6:
-		std::cout << "Lift on 6 floor\n";
+		std::cout << "Lift come on 6 floor from 5 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 6);
+		PassengerOut(pressedInnerButtons, 6);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 7; i < FLOORS; i++)
@@ -736,15 +736,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing6);
 		break;
 	case State::Going_Down6:
-		std::cout << "Lift on 6 floor\n";
+		std::cout << "Lift come on 6 floor from 5 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 6);
+		temp = PassengerIn(pressedOuterButtons, 6);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 6);
+		PassengerOut(pressedInnerButtons, 6);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 5; i >= 0; i--)
@@ -771,13 +771,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 
 	// floor 7
 	case State::Standing7:
-		std::cout << "Lift on 7 floor\n";
+		std::cout << "Lift standing on 7 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 7);
+		PassengerOut(pressedInnerButtons, 7);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 7);
+		temp = PassengerIn(pressedOuterButtons, 7);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -822,10 +822,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 		break;
 	case State::Going_Up7:
-		std::cout << "Lift on 7 floor\n";
+		std::cout << "Lift come on 7 floor from 6 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 7);
+		PassengerOut(pressedInnerButtons, 7);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 8; i < FLOORS; i++)
@@ -849,15 +849,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing7);
 		break;
 	case State::Going_Down7:
-		std::cout << "Lift on 7 floor\n";
+		std::cout << "Lift come on 7 floor from 8 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 7);
+		temp = PassengerIn(pressedOuterButtons, 7);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 7);
+		PassengerOut(pressedInnerButtons, 7);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 6; i >= 0; i--)
@@ -884,13 +884,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 
 	// states for the 8 floor
 	case State::Standing8:
-		std::cout << "Lift on 8 floor STANDING\n";
+		std::cout << "Lift standing on 8 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 8);
+		PassengerOut(pressedInnerButtons, 8);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 8);
+		temp = PassengerIn(pressedOuterButtons, 8);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
@@ -935,10 +935,10 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 		break;
 	case State::Going_Up8:
-		std::cout << "Lift on 8 floor UP\n";
+		std::cout << "Lift come on 8 floor from 7 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 8);
+		PassengerOut(pressedInnerButtons, 8);
 
 		// if inner button on higher floor is pressed, go up
 		for (int i = 3; i < FLOORS; i++)
@@ -962,15 +962,15 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		SetCurrentState(State::Standing8);
 		break;
 	case State::Going_Down8:
-		std::cout << "Lift on 8 floor\n";
+		std::cout << "Lift come on 8 floor from 9 floor\n";
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 8);
+		temp = PassengerIn(pressedOuterButtons, 8);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
 		// if smbd wants to leave
-		PassangerOut(pressedInnerButtons, 8);
+		PassengerOut(pressedInnerButtons, 8);
 
 		// if inner button on lower floor is pressed, go down
 		for (int i = 1; i >= 0; i--)
@@ -998,13 +998,13 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		// states for the 8 floor
 	case State::Standing9:
 
-		std::cout << "Lift on 9 floor\n";
+		std::cout << "Lift standing on 9 floor\n";
 
 		// if inner button is pressed, passanger goes out
-		PassangerOut(pressedInnerButtons, 9);
+		PassengerOut(pressedInnerButtons, 9);
 
 		// if smbd calls lift on this floor, get new passanger
-		temp = PassangerIn(pressedOuterButtons, 9);
+		temp = PassengerIn(pressedOuterButtons, 9);
 		if (temp != -1)
 			pressedInnerButtons[temp] = 1;
 
