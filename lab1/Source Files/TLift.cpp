@@ -904,7 +904,7 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 
 		// if inner button on lower floor is pressed, go down
-		for (int i = 1; i >= 0; i--)
+		for (int i = 7; i >= 0; i--)
 		{
 			if (pressedInnerButtons[i] != 0)
 			{
@@ -924,7 +924,7 @@ void TLift::Transition(std::vector<int>& pressedOuterButtons, std::vector<int>& 
 		}
 
 		// if outer button on lower floor is pressed, go down
-		for (int i = 1; i >= 0; i--)
+		for (int i = 7; i >= 0; i--)
 		{
 			if (pressedOuterButtons[i] != 0)
 			{
