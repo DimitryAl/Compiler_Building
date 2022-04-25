@@ -6,7 +6,7 @@ Going_Down : go out, go down, stand
 number in
 number out
 
-
+//v1
 digraph finite_state_machine {
 	rankdir=LR;
 	size="8,5"
@@ -14,23 +14,92 @@ digraph finite_state_machine {
         node [shape = doublecircle]; S0 S1 S2 S3 S4 S5 S6 S7 S8 S9;
 	node [shape = circle];
 
-	S0 -> GU1 [ lable = "in > 100000000(2) or out > 1000000" ]
+	S0 -> GU1 [ label = "in <= 0100000000 or out <= 0100000000" ];
 
-        S1 -> GU2;
-        S1 -> S0; 
+        S1 -> GU2 [ label = "in <= 10000000 or out <= 10000000" ];
+        S1 -> S0 [ label = "in = 10000000000 or out = 10000000000" ]; 
+        GU1 -> GU2 [ label = "in <= 10000000 or out <= 10000000" ];
+        GU1 -> S1 [ label = "in = 0 or out = 0" ];
+        GD1 -> S0 [ label = "in = 10000000000 or out = 10000000000" ];
+        GD1 -> S1 [ label = "in = 0 or out = 0" ];
+
+        S2 -> GU3 [ label = "in <= 001111111 or out <= 001111111 " ];
+        S2 -> GD1 [ label = "in >= 010000000 or out >= 010000000" ]; 
+        GU2 -> GU3 [ label = "in <= 001111111 or out <= 001111111 " ];
+        GU2 -> S2 [ label = "in = 0 or out = 0" ];
+        GD2 -> GD1 [ label = "in >= 010000000 or out >= 010000000" ] ;
+        GD2 -> S2 [ label = "in = 0 or out = 0" ];
+
+        S3 -> GU4 [ label = "in <= 000111111 or out <= 000111111 "];
+        S3 -> GD2 [ label = "in >= 001000000 or out >= 001000000" ]; 
+        GU3 -> GU4 [ label = "in <= 000111111 or out <= 000111111 "];
+        GU3 -> S3 [ label = "in = 0 or out = 0" ] ;
+        GD3 -> GD2 [ label = "in >= 001000000 or out >= 001000000" ];
+        GD3 -> S3 [ label = "in = 0 or out = 0" ];
+
+        S4 -> GU5 [ label = "in <= 000011111 or out <= 000011111 "];
+        S4 -> GD3  [ label = "in >= 001000000 or out >= 001000000" ]; 
+        GU4 -> GU5 [ label = "in <= 000011111 or out <= 000011111 "];
+        GU4 -> S4 [ label = " in = 0 or out = 0" ];
+        GD4 -> GD3 [ label = "in >= 001000000 or out >= 001000000" ];
+        GD4 -> S4 [ label = " in = 0 or out = 0" ];
+
+        S5 -> GU6 [ label = "in <= 000001111 or out <= 000001111 "];
+        S5 -> GD4 [ label = "in >= 000100000 or out >= 000100000" ]; 
+        GU5 -> GU6  [ label = "in <= 000001111 or out <= 000001111 "];
+        GU5 -> S5 [ label = " in = 0 or out = 0" ];
+        GD5 -> GD4 [ label = "in >= 000100000 or out >= 000100000" ];
+        GD5 -> S5 [ label = " in = 0 or out = 0" ];
+
+        S6 -> GU7 [ label = "in <= 000000111 or out <= 000000111 "];
+        S6 -> GD5 [ label = "in >= 000010000 or out >= 000010000" ]; 
+        GU6 -> GU7 [ label = "in <= 000000111 or out <= 000000111 "];
+        GU6 -> S6 [ label = " in = 0 or out = 0" ];
+        GD6 -> GD5 [ label = "in >= 000010000 or out >= 000010000" ];
+        GD6 -> S6 [ label = " in = 0 or out = 0" ];
+
+        S7 -> GU8  [ label = "in <= 000000011 or out <= 000000011 "];
+        S7 -> GD6 [ label = "in >= 000001000 or out >= 000001000" ]; 
+        GU7 -> GU8 [ label = "0 < in <= 000000011 or 0 < out <= 000000011 "];
+        GU7 -> S7 [ label = " in = 0 or out = 0" ];
+        GD7 -> GD6 [ label = "in >= 000001000 or out >= 000001000" ];
+        GD7 -> S7 [ label = " in = 0 or out = 0" ];
+
+        S8 -> S9  [ label = "in = 000000001 or out = 000000001 "];
+        S8 -> GD7 [ label = "in >= 000000100 or out >= 000000100" ]; 
+        GU8 -> S9 [ label = "in = 000000001 or out = 000000001 "];
+        GU8 -> S8 [ label = " in = 0 or out = 0" ];
+        GD8 -> GD7 [ label = "in >= 000000100 or out >= 000000100" ];
+        GD8 -> S8 [ label = " in = 0 or out = 0" ];
+
+        S9 -> GD8 [label = "in >= 000000010 out >= 000000010"];
+}
+
+//v2
+digraph finite_state_machine {
+	rankdir=LR;
+	size="8,5"
+
+        node [shape = doublecircle]; S0 S1 S2 S3 S4 S5 S6 S7 S8 S9;
+	node [shape = circle];
+
+	S0 -> GU1;
+
+        S1 -> GU2 ;
+        S1 -> S0 ; 
         GU1 -> GU2;
-        GU1 -> S1;
-        GD1 -> S0;
-        GD1 -> S1;
+        GU1 -> S1 ;
+        GD1 -> S0 ;
+        GD1 -> S1 ;
 
-        S2 -> GU3;
-        S2 -> GD1; 
-        GU2 -> GU3;
-        GU2 -> S2;
+        S2 -> GU3 ;
+        S2 -> GD1 ; 
+        GU2 -> GU3 ;
+        GU2 -> S2 ;
         GD2 -> GD1;
-        GD2 -> S2;
+        GD2 -> S2 ;
 
-        S3 -> GU4;
+        S3 -> GU4 ;
         S3 -> GD2; 
         GU3 -> GU4;
         GU3 -> S3;
@@ -44,28 +113,28 @@ digraph finite_state_machine {
         GD4 -> GD3;
         GD4 -> S4;
 
-        S5 -> GU6;
+        S5 -> GU6 ;
         S5 -> GD4; 
         GU5 -> GU6;
         GU5 -> S5;
         GD5 -> GD4;
         GD5 -> S5;
 
-        S6 -> GU7;
+        S6 -> GU7 ;
         S6 -> GD5; 
         GU6 -> GU7;
         GU6 -> S6;
         GD6 -> GD5;
         GD6 -> S6;
 
-        S7 -> GU8;
+        S7 -> GU8 ;
         S7 -> GD6; 
         GU7 -> GU8;
         GU7 -> S7;
         GD7 -> GD6;
         GD7 -> S7;
 
-        S8 -> S9;
+        S8 -> S9 ;
         S8 -> GD7; 
         GU8 -> S9;
         GU8 -> S8;
