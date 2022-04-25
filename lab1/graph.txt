@@ -3,72 +3,74 @@ Going_Up : go out, go up, stand
 Going_Down : go out, go down, stand 
 
 
+number in
+number out
+
 
 digraph finite_state_machine {
 	rankdir=LR;
 	size="8,5"
 
+        node [shape = doublecircle]; S0 S1 S2 S3 S4 S5 S6 S7 S8 S9;
 	node [shape = circle];
 
-	S0 -> GU0;
-        GU0 -> S1;
-        GU0 -> GU1;
+	S0 -> GU1 [ lable = "in > 100000000(2) or out > 1000000" ]
 
-        S1 -> GU1;
-        S1 -> GD1; 
-        GU1 -> S2;
+        S1 -> GU2;
+        S1 -> S0; 
         GU1 -> GU2;
+        GU1 -> S1;
         GD1 -> S0;
+        GD1 -> S1;
 
-        S2 -> GU2;
-        S2 -> GD2;
-        GU2 -> S3;
+        S2 -> GU3;
+        S2 -> GD1; 
         GU2 -> GU3;
-        GD2 -> S1;
+        GU2 -> S2;
         GD2 -> GD1;
+        GD2 -> S2;
 
-        S3 -> GU3;
-        S3 -> GD3;
-        GU3 -> S4;
+        S3 -> GU4;
+        S3 -> GD2; 
         GU3 -> GU4;
-        GD3 -> S2;
+        GU3 -> S3;
         GD3 -> GD2;
+        GD3 -> S3;
 
-        S4 -> GU4;
-        S4 -> GD4;
-        GU4 -> S5;
+        S4 -> GU5;
+        S4 -> GD3; 
         GU4 -> GU5;
-        GD4 -> S3;
+        GU4 -> S4;
         GD4 -> GD3;
+        GD4 -> S4;
 
-        S5 -> GU5;
-        S5 -> GD5;
-        GU5 -> S6;
+        S5 -> GU6;
+        S5 -> GD4; 
         GU5 -> GU6;
-        GD5 -> S4;
+        GU5 -> S5;
         GD5 -> GD4;
+        GD5 -> S5;
 
-        S6 -> GU6;
-        S6 -> GD6;
-        GU6 -> S7;
+        S6 -> GU7;
+        S6 -> GD5; 
         GU6 -> GU7;
-        GD6 -> S5;
+        GU6 -> S6;
         GD6 -> GD5;
+        GD6 -> S6;
 
-        S7 -> GU7;
-        S7 -> GD7;
-        GU7 -> S8;
+        S7 -> GU8;
+        S7 -> GD6; 
         GU7 -> GU8;
-        GD7 -> S6;
+        GU7 -> S7;
         GD7 -> GD6;
+        GD7 -> S7;
 
-        S8 -> GU8;
-        S8 -> GD8;
+        S8 -> S9;
+        S8 -> GD7; 
         GU8 -> S9;
-        GD8 -> S7;
+        GU8 -> S8;
         GD8 -> GD7;
+        GD8 -> S8;
 
-        S9 -> GD9;
-        GD9 -> S8;
-        GD9 -> GD8;
+        S9 -> GD8;
 }
