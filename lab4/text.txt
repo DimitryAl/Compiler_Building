@@ -1,0 +1,2 @@
+for(1abc:=0;!<1a;1abc:=1abc+1)	do	1abc:=12;
+2ab:=-1abc-25;
