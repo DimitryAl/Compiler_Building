@@ -1,38 +1,52 @@
 %{
-#include <stdio.h>
-#include "TNode.h"
-#include <cctype>
-#include <iostream>
-#define YYSTYPE TNode*
-int yylex(void);
-void yyerror(const char* s);
-TNode root;
-
+ #include <stdio.h>
+ extern FILE *yyin;
+ extern int yylineno;
+ extern int ch;
+ extern char *yytext;
+ int yylex(void);
+ void yyerror(char *);
 %}
+%token  FOR DO ID NUMBER
+%right ASSIGN
+%left CMP
+%%
+program: statement { printf("\nprogram\n"); }
+statement: FOR'('expr';'expr_cmp';'expr')' DO oper';'{
+ printf("\nstatement\n");}
+ | error';'
 
-%token NUM
-%token ENDOF
-%token BEGINMARKER
-%token ENDMARKER
+oper:   statement { printf("\noperator\n"); }
+| expr { printf("\noperator\n"); }
+        | statement oper { printf("\noperator:\n"); }
+
+expr:    ID ASSIGN expr_cmp { printf("\nassign\n"); }
+		| ID ASSIGN NUMBER { printf("\nassign\n");}
+
+expr_cmp: prim_expr CMP prim_expr { printf("\ncomparison\n"); }
+
+prim_expr: ID   { printf("\nprimary expression\n"); }
+            | NUMBER { printf("\nprimary expression\n"); }
 
 %%
-
-input:
-	| input line
-	
-line: ENDOF
-	| S ENDOF					{root.addChild($1);printTree(root,0);}
-	
-S:	NUM BEGINMARKER S ENDMARKER	{$$->addChild($3);}
-	| S S 						{$$->addBrother($2);}
-	| NUM
-
-%%
-
-void yyerror(const char *s) {
-	std::cout<< s;
+void yyerror(char *errmsg)
+{
+ fprintf(stderr, "%s (%d, %d): %s\n", errmsg, yylineno, ch, yytext);
 }
-
-int main() {
-	return yyparse();
+int main(int argc, char **argv)
+{
+ if(argc < 2)
+ {
+ printf("\nNot enough arguments. Please specify filename. \n");
+ return -1;
+ }
+ if((yyin = fopen(argv[1], "r")) == NULL)
+ {
+ printf("\nCannot open file %s.\n", argv[1]);
+ return -1;
+ }
+ ch = 1;
+ yylineno = 1;
+ yyparse();
+ return 0;
 }
