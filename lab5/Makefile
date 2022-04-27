@@ -9,3 +9,4 @@ delete:
 	rm y.tab.h
 	rm lex.yy.c
 	rm a.out
+all: delete make start

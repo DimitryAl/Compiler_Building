@@ -16,14 +16,13 @@ statement: FOR'('expr';'expr_cmp';'expr')' DO oper';'{
  printf("\nstatement\n");}
  | error';'
 
-oper:   statement { printf("\noperator\n"); }
-| expr { printf("\noperator\n"); }
+oper:   statement { printf("\noperator statement\n"); }
+		| expr { printf("\noperator expr\n"); }
         | statement oper { printf("\noperator:\n"); }
 
-expr:    ID ASSIGN expr_cmp { printf("\nassign\n"); }
-		| ID ASSIGN NUMBER { printf("\nassign\n");}
+expr:   ID ASSIGN NUMBER { printf("\nexpression\n");}
 
-expr_cmp: prim_expr CMP prim_expr { printf("\ncomparison\n"); }
+expr_cmp: prim_expr CMP prim_expr { printf("\nexpression comparison\n"); }
 
 prim_expr: ID   { printf("\nprimary expression\n"); }
             | NUMBER { printf("\nprimary expression\n"); }
